@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Utils;
 
@@ -25,20 +26,32 @@ public class CharacterLane : MonoBehaviour
         var cardActions = new List<CardAction>();
         foreach (var character in characters)
         {
-            var cards = character.Deck.GetCards(character.characterData.speed, character.IsPlayer);
-            foreach (var card in cards)
-            {
-                cardActions.Add(new CardAction
-                {
-                    Data = card, 
-                    Source = character, 
-                    Target = character.IsPlayer ? TargetType.Player : TargetType.Enemy
-                });
-            }
+            bool isPlayer = character.IsPlayer;
+            Debug.Log($"{character.Deck.Count()} {character.characterData.speed}");
+            var cards = isPlayer ? GetPlayerCards(character): GetEnemyCards(character);
+            Debug.Log(character.Deck.Count());
+            cardActions.AddRange(
+                cards.Select(card => 
+                    new CardAction
+                    {
+                        Data = card, 
+                        Source = character, 
+                        Target = isPlayer ? TargetType.Player : TargetType.Enemy
+                    }
+                )
+            );
         }
 
         return cardActions.Shuffle();
     }
+
+    private static IList<CardData> GetPlayerCards(CharacterComponent player) => 
+        player.Deck.GetCards(player.characterData.speed, true);
+
+    private static IList<CardData> GetEnemyCards(CharacterComponent enemy) =>
+        enemy.Deck
+            .Shuffle()
+            .GetCards(enemy.characterData.speed, false);
 
     public void RemoveAllConditions()
     {

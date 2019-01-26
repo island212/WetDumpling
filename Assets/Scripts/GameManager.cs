@@ -13,13 +13,15 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         var playerActions = playerLane.GetTurnActions();
-        foreach (var turnAction in playerActions)
-        {
-            Debug.Log(turnAction.Source.name);
-        }
+        LogActions(playerActions);
 
         var enemyActions = enemyLane.GetTurnActions();
-        foreach (var turnAction in enemyActions)
+        LogActions(enemyActions);
+    }
+
+    void LogActions(IEnumerable<CardAction> actions)
+    {
+        foreach (var turnAction in actions)
         {
             Debug.Log($"{turnAction.Source.name} {turnAction.Data.name}");
         }
