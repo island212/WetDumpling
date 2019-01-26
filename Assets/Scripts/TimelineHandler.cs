@@ -18,6 +18,7 @@ public class TimelineHandler : MonoBehaviour
     [SerializeField]
     private int maxCards;
     private int cardCount = 0;
+    private GameObject ghostCardHolder = null;
 
     private void Awake()
     {
@@ -68,7 +69,7 @@ public class TimelineHandler : MonoBehaviour
         foreach (Transform i in transform)
         {
             currentDistance = Mathf.Abs((i.position - card.transform.position).magnitude);
-            if (i != card.transform && currentDistance < smallestDistance)
+            if (i != card.transform && ghostCardHolder != i && currentDistance < smallestDistance)
             {
                 closestCard = i;
                 smallestDistance = currentDistance;
