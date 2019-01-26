@@ -28,6 +28,18 @@ public class PlayerHand : MonoBehaviour
         return transform.childCount;
     }
 
+    public bool addCardFromBoard(GameObject card)
+    {
+        if (getNumberOfCards() > maxCards)
+        {
+            return false;
+        }
+
+        card.transform.parent = transform;
+        card.transform.localScale = new Vector3(cardScale * 1.5f, cardScale * 1.5f, 0);
+        return true;
+    }
+
     public bool addCard(GameObject card)
     {
         if (getNumberOfCards() > maxCards)

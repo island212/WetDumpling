@@ -33,7 +33,7 @@ public class TimelineHandler : MonoBehaviour
         return transform.GetComponentsInChildren<CardAction>();
     }
 
-    public bool addCard(GameObject card)
+    public bool addCardFromBoard(GameObject card)
     {
         if (getNumberOfCards() > maxCards)
         {
@@ -58,7 +58,7 @@ public class TimelineHandler : MonoBehaviour
 
         card.transform.SetSiblingIndex(closestCard.transform.GetSiblingIndex());
 
-        card.transform.localScale = new Vector3(cardScale, cardScale, 0);
+        card.transform.localScale = new Vector3(cardScale * 1.5f, cardScale * 1.5f, 0);
 
         return true;
     }
