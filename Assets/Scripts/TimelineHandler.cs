@@ -1,14 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine;
+using UnityEngine.UI;
 
 public class TimelineHandler : MonoBehaviour
 {
+    public Action OnCardAdded { get; set; }
+    public Action OnCardRemoved { get; set; }
+
     public static TimelineHandler Instance { get; private set; }
+    public float cardScale;
 
     [SerializeField]
     private int maxCards;
+    private int cardCount = 0;
 
     private void Awake()
     {
@@ -28,12 +34,12 @@ public class TimelineHandler : MonoBehaviour
         return transform.childCount;
     }
 
-    public CardAction[] getActions()
+    public CardAction[] GetActions()
     {
         return transform.GetComponentsInChildren<CardAction>();
     }
 
-    public bool addCard(GameObject card)
+    public bool addCardFromBoard(GameObject card)
     {
         if (getNumberOfCards() > maxCards)
         {
@@ -58,7 +64,20 @@ public class TimelineHandler : MonoBehaviour
 
         card.transform.SetSiblingIndex(closestCard.transform.GetSiblingIndex());
 
-        card.transform.localScale = new Vector3(0.3f, 0.3f, 0);
+        card.transform.localScale = new Vector3(cardScale * 1.5f, cardScale * 1.5f, 0);
+
+
+        cardCount++;
+
+        OnCardAdded?.Invoke();
+
+        return true;
+    }
+
+    public bool addEnemyMove(GameObject move)
+    {
+        move.transform.SetParent(transform);
+        move.transform.localScale = new Vector3(cardScale, cardScale, 0);
 
         return true;
     }
@@ -72,6 +91,8 @@ public class TimelineHandler : MonoBehaviour
 
         Transform[] childrens = GetComponentsInChildren<Transform>();
         Destroy(childrens[1].gameObject);
+
+        OnCardRemoved?.Invoke();
 
         return true;
     }

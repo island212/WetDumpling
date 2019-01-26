@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerHand : MonoBehaviour
 {
     public static PlayerHand Instance { get; private set; }
+    public float cardScale;
 
     [SerializeField]
     private int maxCards;
@@ -27,6 +28,18 @@ public class PlayerHand : MonoBehaviour
         return transform.childCount;
     }
 
+    public bool addCardFromBoard(GameObject card)
+    {
+        if (getNumberOfCards() > maxCards)
+        {
+            return false;
+        }
+
+        card.transform.parent = transform;
+        card.transform.localScale = new Vector3(cardScale * 1.5f, cardScale * 1.5f, 0);
+        return true;
+    }
+
     public bool addCard(GameObject card)
     {
         if (getNumberOfCards() > maxCards)
@@ -35,7 +48,7 @@ public class PlayerHand : MonoBehaviour
         }
 
         card.transform.parent = transform;
-        card.transform.localScale = new Vector3(1f, 1f, 0);
+        card.transform.localScale = new Vector3(cardScale, cardScale, 0);
         return true;
     }
 }

@@ -1,34 +1,34 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class TurnPlayer
+public class TurnPlayer : MonoBehaviour
 {
-    private struct CharacterCondition
-    {
-        public HealthCondition condition;
-        public CharacterComponent source;
+    public TimelineHandler timeline;
+    public CharacterLine enemiesLine, playersLine;
 
-        public CharacterCondition(CardAction action)
-        {
-            condition = action.Data.condition;
-            source = action.Source;
-        }
+    public Button nextTurnButton;
+
+    private void Start()
+    {
+        timeline.OnCardAdded += OnCardAdded;
+        timeline.OnCardRemoved += OnCardRemoved;
     }
 
-    private TimelineHandler timeline;
-    private CharacterLine enemiesLine, playersLine;
-
-    public TurnPlayer(TimelineHandler timeline, CharacterLine enemiesLine, CharacterLine playersLine)
+    private void OnCardAdded()
     {
-        this.timeline = timeline;
-        this.playersLine = playersLine;
-        this.enemiesLine = enemiesLine;
+        nextTurnButton.enabled = true;
+    }
+
+    private void OnCardRemoved()
+    {
+        nextTurnButton.enabled = false;
     }
 
     public void Next()
     {
-        CardAction[] allActions = timeline.getActions();
+        CardAction[] allActions = timeline.GetActions();
         foreach (var action in allActions)
         {
             if(!action.Source.IsPlayer)
