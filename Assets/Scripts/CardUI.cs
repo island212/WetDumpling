@@ -20,7 +20,6 @@ public class CardUI : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnte
         EventSystem.current.RaycastAll(eventData, hits);
         foreach (RaycastResult i in hits)
         {
-            Debug.Log(i.gameObject.name);
             if (i.gameObject.tag == "TimelinePanel")
             {
                 TimelineHandler.Instance.addCardFromBoard(gameObject);
