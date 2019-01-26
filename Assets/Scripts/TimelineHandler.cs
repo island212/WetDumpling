@@ -26,7 +26,12 @@ public class TimelineHandler : MonoBehaviour
     public int getNumberOfCards()
     {
         return transform.childCount;
-    }    
+    }
+
+    public CardAction[] getActions()
+    {
+        return transform.GetComponentsInChildren<CardAction>();
+    }
 
     public bool addCard(GameObject card)
     {
