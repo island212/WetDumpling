@@ -47,7 +47,7 @@ public class PlayerHand : MonoBehaviour
             return false;
         }
 
-        card.transform.parent = transform;
+        card.transform.SetParent(transform);
         card.transform.localScale = new Vector3(cardScale, cardScale, 0);
         return true;
     }

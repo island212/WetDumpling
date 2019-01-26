@@ -52,7 +52,17 @@ public class GameManager : MonoBehaviour
 
     IEnumerator round()
     {
-        yield return new WaitForSeconds(5);
+        // play animation of attack
+        int numCard = TimelineHandler.Instance.getNumberOfCards();
+        for (int i = 0; i < numCard; i++) {
+            yield return new WaitForSeconds(2);
+            Transform nextAction = TimelineHandler.Instance.removeTopCard();
+            // Do attack things with animation for damage or defence
+            Destroy(nextAction.gameObject);
+            TimelineHandler.Instance.updateCanvas();
+        }
+
+        // give enemies new attack in timeline
         playing = false;
     }
 }

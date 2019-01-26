@@ -89,18 +89,22 @@ public class TimelineHandler : MonoBehaviour
         return true;
     }
 
-    public bool removeTopCard()
+    public Transform removeTopCard()
     {
         if (getNumberOfCards() <= 0)
         {
-            return false;
+            return null;
         }
 
         Transform[] childrens = GetComponentsInChildren<Transform>();
-        Destroy(childrens[1].gameObject);
 
         OnCardRemoved?.Invoke();
 
-        return true;
+        return childrens[1];
+    }
+
+    public void updateCanvas()
+    {
+        LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
     }
 }
