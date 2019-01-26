@@ -15,12 +15,9 @@ public class CharacterComponent : MonoBehaviour
     public Deck Deck { get; private set; }
 
     private int status;
-    public HealthCondition Status
-    {
-        get { return (HealthCondition)status; }
-    }
+    public HealthCondition Status => (HealthCondition)status;
 
-    public bool IsPlayer { get { return characterData.isPlayer; } }
+    public bool IsPlayer => characterData.isPlayer;
 
     private void Awake()
     {
