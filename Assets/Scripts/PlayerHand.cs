@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerHand : MonoBehaviour
 {
     public static PlayerHand Instance { get; private set; }
+    public float cardScale;
 
     [SerializeField]
     private int maxCards;
@@ -35,7 +36,7 @@ public class PlayerHand : MonoBehaviour
         }
 
         card.transform.parent = transform;
-        card.transform.localScale = new Vector3(1f, 1f, 0);
+        card.transform.localScale = new Vector3(cardScale, cardScale, 0);
         return true;
     }
 }

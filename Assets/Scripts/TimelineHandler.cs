@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine;
 
 public class TimelineHandler : MonoBehaviour
 {
     public static TimelineHandler Instance { get; private set; }
+    public float cardScale;
 
     [SerializeField]
     private int maxCards;
@@ -58,7 +58,15 @@ public class TimelineHandler : MonoBehaviour
 
         card.transform.SetSiblingIndex(closestCard.transform.GetSiblingIndex());
 
-        card.transform.localScale = new Vector3(0.3f, 0.3f, 0);
+        card.transform.localScale = new Vector3(cardScale, cardScale, 0);
+
+        return true;
+    }
+
+    public bool addEnemyMove(GameObject move)
+    {
+        move.transform.SetParent(transform);
+        move.transform.localScale = new Vector3(cardScale, cardScale, 0);
 
         return true;
     }
