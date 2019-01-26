@@ -12,17 +12,17 @@ public class CharacterComponent : MonoBehaviour
     public int Health { get; private set; }
     public int Shield { get; private set; }
 
-    private int status;
-    public HealthCondition Status
-    {
-        get { return (HealthCondition)status; }
-    }
+    public Deck Deck { get; private set; }
 
-    public bool IsPlayer { get { return characterData.isPlayer; } }
+    private int status;
+    public HealthCondition Status => (HealthCondition)status;
+
+    public bool IsPlayer => characterData.isPlayer;
 
     private void Awake()
     {
         Health = characterData.maxHealth;
+        Deck = new Deck(characterData.actions);
     }
 
     public CardData ChooseAction()
