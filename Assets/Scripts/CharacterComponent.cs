@@ -12,7 +12,7 @@ public class CharacterComponent : MonoBehaviour
     public int Health { get; private set; }
     public int Shield { get; private set; }
 
-    public int status;
+    private int status;
     public HealthCondition Status
     {
         get { return (HealthCondition)status; }
