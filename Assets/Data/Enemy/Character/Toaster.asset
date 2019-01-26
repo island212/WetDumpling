@@ -10,13 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6c7b846562b6564bba3bd1f99126c25, type: 3}
-  m_Name: Simple
+  m_Name: Toaster
   m_EditorClassIdentifier: 
   isPlayer: 0
   maxHealth: 3
   speed: 1
   actions:
-  - {fileID: 11400000, guid: 7f67ddfd66ed17f459fd2ec378a15f78, type: 2}
-  - {fileID: 11400000, guid: 7f67ddfd66ed17f459fd2ec378a15f78, type: 2}
-  - {fileID: 11400000, guid: a7d27459f43951f4780f726a7b7d47d7, type: 2}
-  - {fileID: 11400000, guid: a7d27459f43951f4780f726a7b7d47d7, type: 2}
+  - {fileID: 11400000, guid: 034f0686a7e544672bb0a1448943616a, type: 2}
