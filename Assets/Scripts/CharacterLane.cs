@@ -1,11 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using Utils;
 
-public class CharacterLine : MonoBehaviour
+public class CharacterLane : MonoBehaviour
 {
     [SerializeField]
     private CharacterComponent[] characters;
+
+    private void Awake()
+    {
+        characters = transform.GetComponentsInChildren<CharacterComponent>();
+    }
 
     public void Hit(int damage, HealthCondition condition)
     {
@@ -17,25 +22,22 @@ public class CharacterLine : MonoBehaviour
 
     public IEnumerable<CardAction> GetTurnActions()
     {
-
         var cardActions = new List<CardAction>();
         foreach (var character in characters)
         {
-            var cards = character.Deck.GetCards(character.characterData.speed);
+            var cards = character.Deck.GetCards(character.characterData.speed, character.IsPlayer);
             foreach (var card in cards)
             {
-                var action = new CardAction
+                cardActions.Add(new CardAction
                 {
                     Data = card, 
                     Source = character, 
-                    Target = TargetType.Player
-                };
-
-                cardActions.Add(action);
+                    Target = character.IsPlayer ? TargetType.Player : TargetType.Enemy
+                });
             }
         }
 
-        return cardActions;
+        return cardActions.Shuffle();
     }
 
     public void RemoveAllConditions()

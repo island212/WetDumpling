@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TargetType { Player, Monster }
+public enum TargetType { Player, Enemy }
 
 public class CardAction
 {

@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayer: 0
   maxHealth: 3
+  speed: 1
   actions:
   - {fileID: 11400000, guid: 7f67ddfd66ed17f459fd2ec378a15f78, type: 2}
+  - {fileID: 11400000, guid: 7f67ddfd66ed17f459fd2ec378a15f78, type: 2}
+  - {fileID: 11400000, guid: a7d27459f43951f4780f726a7b7d47d7, type: 2}
   - {fileID: 11400000, guid: a7d27459f43951f4780f726a7b7d47d7, type: 2}
