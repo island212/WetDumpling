@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Linq;
 using UnityEngine.SocialPlatforms;
@@ -9,16 +10,17 @@ public class Deck
     private IList<CardData> cards;
     private readonly IList<CardData> fullDeck;
 
-    public Deck(IList<CardData> cards)
+    public Deck(IEnumerable<CardData> cards)
     {
-        this.cards = cards;
-        fullDeck = cards;
+        fullDeck = new List<CardData>(cards);
+        this.cards = fullDeck;
     }
 
-    public IList<CardData> Shuffle()
+    public Deck Shuffle()
     {
         cards = fullDeck;
-        return cards.Shuffle();
+        cards.Shuffle();
+        return this;
     }
 
     public IList<CardData> GetCards(int amount)
@@ -35,7 +37,8 @@ public class Deck
 
         for (int i = 0; i < amount; i++)
         {
-            output.Add(cards.ElementAt(i));
+            var card = cards.ElementAt(i);
+            output.Add(card);
             if(allowRemove)
                 cards.RemoveAt(i);
         }
@@ -56,5 +59,10 @@ public class Deck
     public IList<CardData> GetFullDeck()
     {
         return fullDeck;
+    }
+
+    public int Count()
+    {
+        return cards.Count;
     }
 }
