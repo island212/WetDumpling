@@ -8,15 +8,17 @@ public class GameManager : MonoBehaviour
     public CharacterLane playerLane;
     public CharacterLane enemyLane;
 
+    public Transform bottomPanel;
     private bool playing;
 
     void Start()
     {
         var playerActions = playerLane.GetTurnActions();
         LogActions(playerActions);
+        ShowPlayerHand(playerActions);
 
         var enemyActions = enemyLane.GetTurnActions();
-        LogActions(enemyActions);
+        //LogActions(enemyActions);
     }
 
     void LogActions(IEnumerable<CardAction> actions)
@@ -24,6 +26,13 @@ public class GameManager : MonoBehaviour
         foreach (var turnAction in actions)
         {
             Debug.Log($"{turnAction.Source.name} {turnAction.Data.name}");
+        }
+    }
+
+    void ShowPlayerHand(IEnumerable<CardAction> cards) {
+        foreach (CardAction card in cards) {
+            GameObject instance = Instantiate(card.Data.cardSprite);
+            PlayerHand.Instance.addCard(instance);
         }
     }
 
