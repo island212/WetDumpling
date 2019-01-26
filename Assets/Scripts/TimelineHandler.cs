@@ -40,31 +40,23 @@ public class TimelineHandler : MonoBehaviour
             return false;
         }
 
-        Transform[] childrens = GetComponentsInChildren<Transform>();
         Transform closestCard = null;
         float smallestDistance = Mathf.Infinity;
         float currentDistance;
 
-        foreach (Transform i in childrens)
+        foreach (Transform i in transform)
         {
-            currentDistance = (i.position - card.transform.position).magnitude;
-            if (currentDistance < smallestDistance)
+            currentDistance = Mathf.Abs((i.position - card.transform.position).magnitude);
+            if (i != card.transform && currentDistance < smallestDistance)
             {
                 closestCard = i;
                 smallestDistance = currentDistance;
             }
         }
 
-        card.transform.parent = transform;
+        card.transform.SetParent(transform);
 
-        if (Mathf.Sign(closestCard.transform.position.x - card.transform.position.x) == 1)
-        {
-            card.transform.SetSiblingIndex(closestCard.transform.GetSiblingIndex() + 1);
-        }
-        else
-        {
-            card.transform.SetSiblingIndex(closestCard.transform.GetSiblingIndex() - 1);
-        }
+        card.transform.SetSiblingIndex(closestCard.transform.GetSiblingIndex());
 
         card.transform.localScale = new Vector3(0.3f, 0.3f, 0);
 
