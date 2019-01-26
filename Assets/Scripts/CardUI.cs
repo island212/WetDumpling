@@ -31,7 +31,7 @@ public class CardUI : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnte
         {
             if (i.gameObject.tag == "TimelinePanel")
             {
-
+                TimelineHandler.Instance.addGhostCard();
             }
         }
     }

@@ -95,4 +95,9 @@ public class TimelineHandler : MonoBehaviour
 
         return true;
     }
+
+    public void addGhostCard()
+    {
+
+    }
 }
