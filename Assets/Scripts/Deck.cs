@@ -37,10 +37,10 @@ public class Deck
 
         for (int i = 0; i < amount; i++)
         {
-            var card = cards.ElementAt(i);
+            var card = cards.First();
             output.Add(card);
             if(allowRemove)
-                cards.RemoveAt(i);
+                cards.Remove(card);
         }
 
         return output;
