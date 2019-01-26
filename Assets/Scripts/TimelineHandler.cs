@@ -11,10 +11,12 @@ public class TimelineHandler : MonoBehaviour
 
     public static TimelineHandler Instance { get; private set; }
     public float cardScale;
+    public GameObject ghostCard;
 
     [SerializeField]
     private int maxCards;
     private int cardCount = 0;
+    private GameObject ghostCardHolder = null;
 
     private void Awake()
     {
@@ -41,6 +43,8 @@ public class TimelineHandler : MonoBehaviour
 
     public bool addCardFromBoard(GameObject card)
     {
+        removeGhostCard();
+
         if (getNumberOfCards() > maxCards)
         {
             return false;
@@ -53,7 +57,7 @@ public class TimelineHandler : MonoBehaviour
         foreach (Transform i in transform)
         {
             currentDistance = Mathf.Abs((i.position - card.transform.position).magnitude);
-            if (i != card.transform && currentDistance < smallestDistance)
+            if (i != card.transform && ghostCardHolder != i && currentDistance < smallestDistance)
             {
                 closestCard = i;
                 smallestDistance = currentDistance;
@@ -94,10 +98,5 @@ public class TimelineHandler : MonoBehaviour
         OnCardRemoved?.Invoke();
 
         return true;
-    }
-
-    public void addGhostCard()
-    {
-
     }
 }

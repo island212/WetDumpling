@@ -13,6 +13,12 @@ public class CardUI : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnte
     private int oldChildIndex;
     private bool inserted = false;
 
+    struct movement
+    {
+        Vector3 oldPos;
+        Vector3 newPos;
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         oldPos = transform.position;
@@ -31,7 +37,7 @@ public class CardUI : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnte
         {
             if (i.gameObject.tag == "TimelinePanel")
             {
-                TimelineHandler.Instance.addGhostCard();
+
             }
         }
     }
