@@ -1,30 +1,31 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TimelineHandler : MonoBehaviour
 {
+    public Action OnCardAdded { get; set; }
+    public Action OnCardRemoved { get; set; }
+
     [SerializeField]
     private int maxCards;
+    private int cardCount = 0;
 
-    void Start()
-    {
-        removeTopCard();    
-    }
-
-    public int getNumberOfCards()
+    public int GetNumberOfCards()
     {
         return transform.childCount;
     }
 
-    public CardAction[] getActions()
+    public CardAction[] GetActions()
     {
         return transform.GetComponentsInChildren<CardAction>();
     }
 
-    public bool addCard(GameObject card)
+    public bool AddCard(GameObject card)
     {
-        if (getNumberOfCards() > maxCards)
+        if (GetNumberOfCards() > maxCards)
         {
             return false;
         }
@@ -53,18 +54,25 @@ public class TimelineHandler : MonoBehaviour
         {
             newCard.transform.SetSiblingIndex(closestCard.transform.GetSiblingIndex() - 1);
         }
+
+        cardCount++;
+
+        OnCardAdded?.Invoke();
+
         return true;
     }
 
-    public bool removeTopCard()
+    public bool RemoveTopCard()
     {
-        if (getNumberOfCards() <= 0)
+        if (GetNumberOfCards() <= 0)
         {
             return false;
         }
 
         Transform[] childrens = GetComponentsInChildren<Transform>();
         Destroy(childrens[1].gameObject);
+
+        OnCardRemoved?.Invoke();
 
         return true;
     }
