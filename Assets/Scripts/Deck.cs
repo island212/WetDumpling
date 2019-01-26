@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Linq;
+using UnityEngine.SocialPlatforms;
+using Utils;
 
 public class Deck
 {
@@ -15,35 +17,27 @@ public class Deck
 
     public IList<CardData> Shuffle()
     {
-        var provider = new RNGCryptoServiceProvider();
-        int n = fullDeck.Count;
         cards = fullDeck;
-        while (n > 1)
-        {
-            byte[] box = new byte[1];
-            do
-            {
-                provider.GetBytes(box);
-            }
-            while (!(box[0] < n * (byte.MaxValue / n)));
-            int k = box[0] % n;
-            n--;
-            var card = cards[k];
-            cards[k] = cards[n];
-            cards[n] = card;
-        }
-
-        return cards;
+        return cards.Shuffle();
     }
 
     public IList<CardData> GetCards(int amount)
     {
+        return GetCards(amount, true);
+    }
+
+    public IList<CardData> GetCards(int amount, bool allowRemove)
+    {
         var output = new List<CardData>();
+
+        if (amount > cards.Count)
+            amount = cards.Count;
 
         for (int i = 0; i < amount; i++)
         {
             output.Add(cards.ElementAt(i));
-            cards.RemoveAt(i);
+            if(allowRemove)
+                cards.RemoveAt(i);
         }
 
         return output;

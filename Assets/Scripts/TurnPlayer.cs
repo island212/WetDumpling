@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TurnPlayer : MonoBehaviour
 {
-    public CharacterLine enemiesLine, playersLine;
+    public CharacterLane enemiesLane, playersLane;
 
     public Button nextTurnButton;
 
@@ -38,9 +38,9 @@ public class TurnPlayer : MonoBehaviour
             if(!action.Source.IsPlayer)
                 action.Source.RemoveAllCondition();
 
-            CharacterLine targetedLine = action.Target == TargetType.Player ? playersLine : enemiesLine;
+            CharacterLane targetedLane = action.Target == TargetType.Player ? playersLane : enemiesLane;
 
-            targetedLine.Hit(action.Data.damage, action.Data.condition);
+            targetedLane.Hit(action.Data.damage, action.Data.condition);
 
             if (action.Data.shield > 0)
             {
