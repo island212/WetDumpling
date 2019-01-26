@@ -1,15 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine;
 
 public class TimelineHandler : MonoBehaviour
 {
+    public static TimelineHandler Instance { get; private set; }
+
     [SerializeField]
     private int maxCards;
 
-    void Start()
+    private void Awake()
     {
-        removeTopCard();    
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public int getNumberOfCards()
@@ -24,7 +35,6 @@ public class TimelineHandler : MonoBehaviour
             return false;
         }
 
-        GameObject newCard = Instantiate(card, transform);
         Transform[] childrens = GetComponentsInChildren<Transform>();
         Transform closestCard = null;
         float smallestDistance = Mathf.Infinity;
@@ -40,14 +50,19 @@ public class TimelineHandler : MonoBehaviour
             }
         }
 
+        card.transform.parent = transform;
+
         if (Mathf.Sign(closestCard.transform.position.x - card.transform.position.x) == 1)
         {
-            newCard.transform.SetSiblingIndex(closestCard.transform.GetSiblingIndex() + 1);
+            card.transform.SetSiblingIndex(closestCard.transform.GetSiblingIndex() + 1);
         }
         else
         {
-            newCard.transform.SetSiblingIndex(closestCard.transform.GetSiblingIndex() - 1);
+            card.transform.SetSiblingIndex(closestCard.transform.GetSiblingIndex() - 1);
         }
+
+        card.transform.localScale = new Vector3(0.3f, 0.3f, 0);
+
         return true;
     }
 
