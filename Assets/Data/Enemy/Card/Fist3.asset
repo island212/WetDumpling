@@ -10,8 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 177402880e8089240b56a6c5e95398f2, type: 3}
-  m_Name: Fist
+  m_Name: Fist3
   m_EditorClassIdentifier: 
-  damage: 2
+  damage: 3
   shield: 0
   condition: 0
+  cardSprite: {fileID: 21300000, guid: dd8c3272024d4464d8bec469088586b4, type: 3}
