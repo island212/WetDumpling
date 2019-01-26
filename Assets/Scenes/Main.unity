@@ -1101,8 +1101,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0e9d261cf50a8f4fb72014f0870b2b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerLane: {fileID: 0}
-  enemyLane: {fileID: 0}
+  playerLane: {fileID: 979439158}
+  enemyLane: {fileID: 1317269432}
 --- !u!4 &704832012
 Transform:
   m_ObjectHideFlags: 0
@@ -1290,8 +1290,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardScale: 1.5
-  ghostCard: {fileID: 1532905528022996796, guid: e41593e6b4437ba45a5bcb79642f08e5,
-    type: 3}
+  cardPefab: {fileID: 0}
   maxCards: 6
 --- !u!1 &920446952
 GameObject:
@@ -1370,7 +1369,7 @@ Transform:
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &979439157
 GameObject:
@@ -1827,7 +1826,7 @@ GameObject:
   - component: {fileID: 1317269433}
   - component: {fileID: 1317269432}
   m_Layer: 0
-  m_Name: EnemyLiane
+  m_Name: EnemyLane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
