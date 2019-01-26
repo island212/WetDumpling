@@ -66,7 +66,6 @@ public class TimelineHandler : MonoBehaviour
 
         card.transform.localScale = new Vector3(cardScale * 1.5f, cardScale * 1.5f, 0);
 
-
         cardCount++;
 
         OnCardAdded?.Invoke();

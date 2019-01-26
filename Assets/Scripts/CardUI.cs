@@ -8,9 +8,12 @@ public class CardUI : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnte
 {
     private static float scaleMultiplier = 1.5f;
     private float currentScale = 1.0f;
+    private Vector3 oldPos;
+    private bool inserted = false;
 
     public void OnDrag(PointerEventData eventData)
     {
+        oldPos = transform.position;
         transform.position = Input.mousePosition;
     }
 
@@ -23,14 +26,24 @@ public class CardUI : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnte
             if (i.gameObject.tag == "TimelinePanel")
             {
                 TimelineHandler.Instance.addCardFromBoard(gameObject);
+                inserted = true;
             }
             else if (i.gameObject.tag == "PlayerhandPanel")
             {
                 PlayerHand.Instance.addCardFromBoard(gameObject);
+                inserted = true;
             }
         }
 
-        LayoutRebuilder.ForceRebuildLayoutImmediate(transform.parent.GetComponent<RectTransform>());
+        if (!inserted)
+        {
+            iTween.MoveTo(gameObject, oldPos, 1);
+        }
+        else
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(transform.parent.GetComponent<RectTransform>());
+        }
+        inserted = false;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
