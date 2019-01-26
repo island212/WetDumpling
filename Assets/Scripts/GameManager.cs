@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public CharacterLane enemyLane;
 
     public Transform bottomPanel;
+    private bool playing;
 
     void Start()
     {
@@ -37,6 +38,42 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        
+        if (playing == false)
+        {
+            // unlock player
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
+
+    public void StartRound()
+    {
+        Debug.Log("Round Started");
+        // lock player action (mouse)
+        playing = true;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
+
+        // Start fight animation
+        StartCoroutine(round());
+
+        // start turn todo (draw cards)
+    }
+
+    IEnumerator round()
+    {
+        // play animation of attack
+        int numCard = TimelineHandler.Instance.getNumberOfCards();
+        for (int i = 0; i < numCard; i++) {
+            yield return new WaitForSeconds(2);
+            Transform nextAction = TimelineHandler.Instance.removeTopCard();
+            // Do attack things with animation for damage or defence
+            Destroy(nextAction.gameObject);
+            TimelineHandler.Instance.updateCanvas();
+        }
+
+        // give enemies new attack in timeline
+        playing = false;
     }
 }
