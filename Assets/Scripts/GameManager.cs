@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public CharacterLane playerLane;
     public CharacterLane enemyLane;
 
+    private bool playing;
+
     void Start()
     {
         var playerActions = playerLane.GetTurnActions();
@@ -25,6 +27,32 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        
+        if (playing == false)
+        {
+            // unlock player
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
+
+    public void StartRound()
+    {
+        Debug.Log("Round Started");
+        // lock player action (mouse)
+        playing = true;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
+
+        // Start fight animation
+        StartCoroutine(round());
+
+        // start turn todo (draw cards)
+    }
+
+    IEnumerator round()
+    {
+        yield return new WaitForSeconds(5);
+        playing = false;
     }
 }
