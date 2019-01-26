@@ -5,7 +5,7 @@ using System.Linq;
 public class Deck
 {
     private IList<CardData> cards;
-    private IList<CardData> fullDeck;
+    private readonly IList<CardData> fullDeck;
 
     public Deck(IList<CardData> cards)
     {

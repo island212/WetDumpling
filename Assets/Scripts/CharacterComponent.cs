@@ -12,6 +12,8 @@ public class CharacterComponent : MonoBehaviour
     public int Health { get; private set; }
     public int Shield { get; private set; }
 
+    public Deck Deck { get; private set; }
+
     private int status;
     public HealthCondition Status
     {
@@ -23,6 +25,7 @@ public class CharacterComponent : MonoBehaviour
     private void Awake()
     {
         Health = characterData.maxHealth;
+        Deck = new Deck(characterData.actions);
     }
 
     public CardData ChooseAction()
