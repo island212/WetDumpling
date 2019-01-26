@@ -11,8 +11,8 @@ public class TurnPlayer : MonoBehaviour
 
     private void Start()
     {
-        timeline.OnCardAdded += OnCardAdded;
-        timeline.OnCardRemoved += OnCardRemoved;
+        TimelineHandler.Instance.OnCardAdded += OnCardAdded;
+        TimelineHandler.Instance.OnCardRemoved += OnCardRemoved;
     }
 
     private void OnCardAdded()

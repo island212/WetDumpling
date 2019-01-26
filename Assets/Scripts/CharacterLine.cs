@@ -17,21 +17,25 @@ public class CharacterLine : MonoBehaviour
 
     public IEnumerable<CardAction> GetTurnActions()
     {
-        List<CardAction> cardActions = new List<CardAction>();
+
+        var cardActions = new List<CardAction>();
         foreach (var character in characters)
         {
-            foreach (var card in character.Deck.GetCards(character.characterData.speed))
+            var cards = character.Deck.GetCards(character.characterData.speed);
+            foreach (var card in cards)
             {
-                CardAction action = new CardAction();
-                action.Data = card;
-                action.Source = character;
-                action.Target = TargetType.Player;
+                var action = new CardAction
+                {
+                    Data = card, 
+                    Source = character, 
+                    Target = TargetType.Player
+                };
 
                 cardActions.Add(action);
             }
         }
 
-
+        return cardActions;
     }
 
     public void RemoveAllConditions()
