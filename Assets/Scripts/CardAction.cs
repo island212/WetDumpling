@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum TargetType { Player, Monster }
 
-public class CardAction : MonoBehaviour
+public class CardAction
 {
     public CharacterComponent Source { get; set; }
     public TargetType Target { get; set; }

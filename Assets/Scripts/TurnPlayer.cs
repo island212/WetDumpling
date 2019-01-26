@@ -5,15 +5,14 @@ using UnityEngine.UI;
 
 public class TurnPlayer : MonoBehaviour
 {
-    public TimelineHandler timeline;
     public CharacterLine enemiesLine, playersLine;
 
     public Button nextTurnButton;
 
     private void Start()
     {
-        timeline.OnCardAdded += OnCardAdded;
-        timeline.OnCardRemoved += OnCardRemoved;
+        TimelineHandler.Instance.OnCardAdded += OnCardAdded;
+        TimelineHandler.Instance.OnCardRemoved += OnCardRemoved;
     }
 
     private void OnCardAdded()
@@ -26,9 +25,14 @@ public class TurnPlayer : MonoBehaviour
         nextTurnButton.enabled = false;
     }
 
+    public void SelectActions()
+    {
+
+    }
+
     public void Next()
     {
-        CardAction[] allActions = timeline.GetActions();
+        var allActions = TimelineHandler.Instance.GetActions();
         foreach (var action in allActions)
         {
             if(!action.Source.IsPlayer)
@@ -42,6 +46,8 @@ public class TurnPlayer : MonoBehaviour
             {
                 action.Source.AddShield(action.Data.shield);
             }
+
+            TimelineHandler.Instance.removeTopCard();
         }
     }
 }

@@ -32,6 +32,7 @@ public class CharacterComponent : MonoBehaviour
 
     public void Damage(int damage)
     {
+        Debug.Log(gameObject.name + " has received " + damage);
         Shield -= damage;
         if (Shield < 0)
         {
@@ -45,6 +46,7 @@ public class CharacterComponent : MonoBehaviour
 
     public void Heal(int heal)
     {
+        Debug.Log(gameObject.name + " has healed " + heal);
         Health += heal;
         if (Health > characterData.maxHealth)
             Health = characterData.maxHealth;
@@ -52,6 +54,7 @@ public class CharacterComponent : MonoBehaviour
 
     public void AddShield(int shield)
     {
+        Debug.Log(gameObject.name + " has received " + shield + " shields");
         Shield += shield;
     }
 
