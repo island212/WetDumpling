@@ -15,4 +15,5 @@ MonoBehaviour:
   damage: 2
   shield: 0
   condition: 0
-  cardSprite: {fileID: 21300000, guid: cba2cd043751c408f91ee7c816c92119, type: 3}
+  cardSprite: {fileID: 3211287697712591694, guid: 32b4941e52c89468da9fe8a6c8e59d84,
+    type: 3}

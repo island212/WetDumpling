@@ -8,5 +8,5 @@ public class CardData : ScriptableObject
     public int damage = 0;
     public int shield = 0;
     public HealthCondition condition = HealthCondition.None;
-    public Sprite cardSprite; 
+    public GameObject cardSprite; 
 }

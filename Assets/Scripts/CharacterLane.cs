@@ -27,9 +27,9 @@ public class CharacterLane : MonoBehaviour
         foreach (var character in characters)
         {
             bool isPlayer = character.IsPlayer;
-            Debug.Log($"{character.Deck.Count()} {character.characterData.speed}");
+            //Debug.Log($"{character.Deck.Count()} {character.characterData.speed}");
             var cards = isPlayer ? GetPlayerCards(character): GetEnemyCards(character);
-            Debug.Log(character.Deck.Count());
+            //Debug.Log(character.Deck.Count());
             cardActions.AddRange(
                 cards.Select(card => 
                     new CardAction
