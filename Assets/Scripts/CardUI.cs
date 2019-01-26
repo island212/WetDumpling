@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class CardUI : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    public CardAction Action { get; set; }
+
     private static float scaleMultiplier = 1.5f;
     private float currentScale = 1.0f;
 

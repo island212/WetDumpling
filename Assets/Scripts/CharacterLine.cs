@@ -15,6 +15,14 @@ public class CharacterLine : MonoBehaviour
             characters[0].AddCondition(condition);
     }
 
+    public IEnumerable<CardAction> GetTurnActions()
+    {
+        foreach (var character in characters)
+        {
+            yield return ;
+        }
+    }
+
     public void RemoveAllConditions()
     {
         foreach (var character in characters)

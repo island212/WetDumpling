@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class TurnPlayer : MonoBehaviour
 {
-    public TimelineHandler timeline;
     public CharacterLine enemiesLine, playersLine;
 
     public Button nextTurnButton;
@@ -26,9 +25,14 @@ public class TurnPlayer : MonoBehaviour
         nextTurnButton.enabled = false;
     }
 
+    public void SelectActions()
+    {
+
+    }
+
     public void Next()
     {
-        CardAction[] allActions = timeline.GetActions();
+        var allActions = TimelineHandler.Instance.GetActions();
         foreach (var action in allActions)
         {
             if(!action.Source.IsPlayer)
@@ -42,6 +46,8 @@ public class TurnPlayer : MonoBehaviour
             {
                 action.Source.AddShield(action.Data.shield);
             }
+
+            TimelineHandler.Instance.removeTopCard();
         }
     }
 }
