@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterLine : MonoBehaviour
 {
+    [SerializeField]
     private CharacterComponent[] characters;
 
     public void Hit(int damage, HealthCondition condition)
