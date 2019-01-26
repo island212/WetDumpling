@@ -1,32 +1,32 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Security.Cryptography;
-using UnityEngine;
 using System.Linq;
 
 public class Deck
 {
     private IList<CardData> cards;
-    private IList<CardData> fullDeck;
+    private readonly IList<CardData> fullDeck;
 
     public Deck(IList<CardData> cards)
     {
         this.cards = cards;
-        this.fullDeck = cards;
+        fullDeck = cards;
     }
 
     public IList<CardData> Shuffle()
     {
-        RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
+        var provider = new RNGCryptoServiceProvider();
         int n = fullDeck.Count;
         cards = fullDeck;
         while (n > 1)
         {
             byte[] box = new byte[1];
-            do provider.GetBytes(box);
-            while (!(box[0] < n * (Byte.MaxValue / n)));
-            int k = (box[0] % n);
+            do
+            {
+                provider.GetBytes(box);
+            }
+            while (!(box[0] < n * (byte.MaxValue / n)));
+            int k = box[0] % n;
             n--;
             var card = cards[k];
             cards[k] = cards[n];
