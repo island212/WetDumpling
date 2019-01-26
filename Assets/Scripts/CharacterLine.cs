@@ -15,6 +15,25 @@ public class CharacterLine : MonoBehaviour
             characters[0].AddCondition(condition);
     }
 
+    public IEnumerable<CardAction> GetTurnActions()
+    {
+        List<CardAction> cardActions = new List<CardAction>();
+        foreach (var character in characters)
+        {
+            foreach (var card in character.Deck.GetCards(character.characterData.speed))
+            {
+                CardAction action = new CardAction();
+                action.Data = card;
+                action.Source = character;
+                action.Target = TargetType.Player;
+
+                cardActions.Add(action);
+            }
+        }
+
+
+    }
+
     public void RemoveAllConditions()
     {
         foreach (var character in characters)

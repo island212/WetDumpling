@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class TimelineHandler : MonoBehaviour
 {
@@ -10,7 +11,9 @@ public class TimelineHandler : MonoBehaviour
     public Action OnCardRemoved { get; set; }
 
     public static TimelineHandler Instance { get; private set; }
+
     public float cardScale;
+    public GameObject cardPefab;
 
     [SerializeField]
     private int maxCards;
@@ -34,9 +37,21 @@ public class TimelineHandler : MonoBehaviour
         return transform.childCount;
     }
 
-    public CardAction[] GetActions()
+    public IEnumerable<CardAction> GetActions()
     {
-        return transform.GetComponentsInChildren<CardAction>();
+        return transform.GetComponentsInChildren<CardUI>().Select(x => x.Action);
+    }
+
+    public bool AddCard(CardAction action)
+    {
+        if (getNumberOfCards() > maxCards)
+        {
+            return false;
+        }
+
+        GameObject card = Instantiate(cardPefab, transform);
+        card.GetComponent<CardUI>().Action = action;
+        return true;
     }
 
     public bool addCardFromBoard(GameObject card)
@@ -69,14 +84,6 @@ public class TimelineHandler : MonoBehaviour
         cardCount++;
 
         OnCardAdded?.Invoke();
-
-        return true;
-    }
-
-    public bool addEnemyMove(GameObject move)
-    {
-        move.transform.SetParent(transform);
-        move.transform.localScale = new Vector3(cardScale, cardScale, 0);
 
         return true;
     }
