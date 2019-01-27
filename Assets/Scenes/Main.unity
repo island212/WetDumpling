@@ -785,7 +785,7 @@ MonoBehaviour:
   - character:
     - {fileID: 4488394995825040636, guid: 630722e561530458785bc75077bb1524, type: 3}
     - {fileID: 811244484, guid: 5fdfed88b35b1462e8905e371a9be6d1, type: 3}
-  waitTimeBetweenActions: 0.5
+  waitTimeBetweenActions: 1
 --- !u!4 &704832012
 Transform:
   m_ObjectHideFlags: 0
@@ -1509,11 +1509,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1858807574}
     m_Modifications:
-    - target: {fileID: 3356254945617435629, guid: 30d277d0ad3c6d243b56e3eb79584b90,
-        type: 3}
-      propertyPath: m_Name
-      value: Life
-      objectReference: {fileID: 0}
     - target: {fileID: 3356254945617435628, guid: 30d277d0ad3c6d243b56e3eb79584b90,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1568,6 +1563,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3356254945617435629, guid: 30d277d0ad3c6d243b56e3eb79584b90,
+        type: 3}
+      propertyPath: m_Name
+      value: Life
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30d277d0ad3c6d243b56e3eb79584b90, type: 3}

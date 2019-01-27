@@ -58,7 +58,7 @@ public class CharacterLane : MonoBehaviour
     {
         int pushIndex = data.push;
 
-        if (pushIndex != 0)
+        if (pushIndex > 0)
         {
             var charToPush = characters[0];
             var nextChar = characters[pushIndex];
