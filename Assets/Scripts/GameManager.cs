@@ -201,7 +201,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator LoadLevel()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(0.5f);
         PlayerHand.Instance.Clear();
         playerLane.getPlayer().ResetDeck();
         for (int i = 0; i < 4; i++)
