@@ -33,14 +33,15 @@ public class GameManager : MonoBehaviour
     }
 
     void ShowPlayerHand(IEnumerable<CardAction> cards) {
-        foreach (CardAction card in cards) {
-            GameObject instance = Instantiate(card.Data.playerCardSprite);
-            PlayerHand.Instance.addCard(instance);
+        foreach (var card in cards) {
+            var instance = Instantiate(card.Data.playerCardSprite);
+            instance.GetComponent<CardUI>().Action = card;
+            PlayerHand.Instance.AddCard(instance);
         }
     }
 
     void GenerateBaseTimeline(IEnumerable<CardAction> cards) {
-        foreach (CardAction card in cards) {
+        foreach (var card in cards) {
             TimelineHandler.Instance.AddCard(card);
         }
     }
@@ -76,16 +77,33 @@ public class GameManager : MonoBehaviour
     IEnumerator round()
     {
         // play animation of attack
-        int numCard = TimelineHandler.Instance.getNumberOfCards();
-        for (int i = 0; i < numCard; i++) {
-            yield return new WaitForSeconds(1);
-            Transform nextAction = TimelineHandler.Instance.removeTopCard();
+        int numCard = TimelineHandler.Instance.GetNumberOfCards();
+        for (int i = 0; i < numCard; i++) 
+        {
             // Do attack things with animation for damage or defence
+            yield return new WaitForSeconds(1);
+            var nextAction = TimelineHandler.Instance.RemoveTopCard();
+            
+            ExecuteAction(nextAction.Action);
+            
             Destroy(nextAction.gameObject);
             TimelineHandler.Instance.updateCanvas();
         }
 
         // give enemies new attack in timeline
         playing = false;
+    }
+
+    void ExecuteAction(CardAction action)
+    {
+        switch (action.Target)
+        {
+           case TargetType.Player:
+               playerLane.ExecuteAction(action.Data);
+               break;
+           case TargetType.Enemy:
+               enemyLane.ExecuteAction(action.Data);
+               break;
+        }
     }
 }

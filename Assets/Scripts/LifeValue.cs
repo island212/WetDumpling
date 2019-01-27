@@ -24,7 +24,7 @@ public class LifeValue : MonoBehaviour
 
     public void SetLife(int life)
     {
-        currentLife += life;
+        currentLife = life;
         lifeText.text = currentLife.ToString();
     }
 

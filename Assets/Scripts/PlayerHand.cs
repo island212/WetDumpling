@@ -22,14 +22,14 @@ public class PlayerHand : MonoBehaviour
         }
     }
 
-    public int getNumberOfCards()
+    public int GetNumberOfCards()
     {
         return transform.childCount;
     }
 
-    public bool addCardFromBoard(GameObject card)
+    public bool AddCardFromBoard(GameObject card)
     {
-        if (getNumberOfCards() > maxCards)
+        if (GetNumberOfCards() > maxCards)
         {
             return false;
         }
@@ -39,9 +39,9 @@ public class PlayerHand : MonoBehaviour
         return true;
     }
 
-    public bool addCard(GameObject card)
+    public bool AddCard(GameObject card)
     {
-        if (getNumberOfCards() > maxCards)
+        if (GetNumberOfCards() > maxCards)
         {
             return false;
         }
