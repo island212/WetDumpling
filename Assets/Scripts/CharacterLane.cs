@@ -48,8 +48,6 @@ public class CharacterLane : MonoBehaviour
 
     public void ExecuteAction(CardData data)
     {
-        //TODO check if the action is a push and move the character by the specified amount
-
         int pushIndex = data.push;
 
         if (pushIndex != 0)
@@ -66,7 +64,7 @@ public class CharacterLane : MonoBehaviour
     public bool IsGameOver()
     {
         UpdateLaneState();
-        return characters.Count <= 0; //TODO maybe check if deck is empty
+        return characters.Count <= 0;
     }
 
     private void UpdateLaneState()
