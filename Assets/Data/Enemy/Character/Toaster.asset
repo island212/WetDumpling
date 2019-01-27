@@ -17,4 +17,4 @@ MonoBehaviour:
   speed: 1
   baseShield: 0
   actions:
-  - {fileID: 11400000, guid: 034f0686a7e544672bb0a1448943616a, type: 2}
+  - {fileID: 11400000, guid: a65694506d1f9464e84fcec2db32d8bd, type: 2}
