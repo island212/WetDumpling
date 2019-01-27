@@ -19,7 +19,8 @@ public class GameManager : MonoBehaviour
     public CharacterLane enemyLane;
     public Button endRoundButton;
     public GameObject gameOver;
-    public GameObject playerPos;
+    public Fade intermission;
+	public GameObject playerPos;
     public GameObject enemyPos;
     public level[] levels;
 
@@ -30,13 +31,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        LoadLevel();
-
-        var playerActions = playerLane.GetTurnActions();
-        ShowPlayerHand(playerActions);
-
-        var enemyActions = enemyLane.GetTurnActions();
-        GenerateEnemyTimeline(enemyActions);
+        StartCoroutine(LoadLevel());
     }
 
     private static void ShowPlayerHand(IEnumerable<CardAction> cards)
@@ -85,16 +80,16 @@ public class GameManager : MonoBehaviour
         {
             // Do attack things with animation for damage or defence
             yield return new WaitForSeconds(waitTimeBetweenActions / 2);
-            var nextAction = TimelineHandler.Instance.RemoveTopCard();
-
-            yield return ExecuteAction(nextAction.Action);
 
             //Check game over state
 
             if (enemyLane.IsGameOver())
             {
                 // Next level
+                TimelineHandler.Instance.Clear();
                 ToNextLevel();
+                StartCoroutine(intermission.FadeAnim());
+                break;
             }
 
             if (playerLane.IsGameOver())
@@ -103,10 +98,21 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(GameOver());
             }
 
+            var nextAction = TimelineHandler.Instance.RemoveTopCard();
+            if (nextAction.Action.Source)
+            {
+                ExecuteAction(nextAction.Action);
+            }
+            else
+            {
+                // Card is from a dead character
+            }
+
             Destroy(nextAction.gameObject);
             TimelineHandler.Instance.updateCanvas();
         }
 
+        
         done?.Invoke();
     }
 
@@ -205,12 +211,14 @@ public class GameManager : MonoBehaviour
 
     private void ToNextLevel()
     {
+        
         currentLevel++;
-        LoadLevel();
+        StartCoroutine(LoadLevel());
     }
 
-    private void LoadLevel()
+    IEnumerator LoadLevel()
     {
+        yield return new WaitForSeconds(0.5f);
         PlayerHand.Instance.Clear();
         playerLane.getPlayer().ResetDeck();
         for (int i = 0; i < 4; i++)
@@ -228,6 +236,8 @@ public class GameManager : MonoBehaviour
             enemyLane.AddCharacter(i, index);
             index++;
         }
+
+        SetupNextTurn();
     }
 
     IEnumerator GameOver()
