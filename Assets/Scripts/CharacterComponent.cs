@@ -50,6 +50,12 @@ public class CharacterComponent : MonoBehaviour
             Attack(damage);
         }
 
+        var healing = action.heal;
+        if (healing > 0)
+        {
+            Heal(healing);
+        }
+
         LifeValue.SetLife(Health);
         LifeValue.SetShield(Shield);
     }

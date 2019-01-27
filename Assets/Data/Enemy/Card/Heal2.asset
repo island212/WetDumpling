@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 177402880e8089240b56a6c5e95398f2, type: 3}
-  m_Name: Fist1
+  m_Name: Heal2
   m_EditorClassIdentifier: 
-  damage: 1
+  damage: 0
   shield: 0
-  heal: 0
+  heal: 2
   condition: 0
-  playerCardSprite: {fileID: 3211287697712591694, guid: 0bd9d4363ea6b40a09f51d681939c9f4,
+  playerCardSprite: {fileID: 3211287697712591694, guid: 7cf0d02377d9b46368c4d43d641d3704,
     type: 3}
-  enemyCardSprite: {fileID: 3211287697712591694, guid: 935ac8f1bc96c493dbb1dd53e530cfa3,
+  enemyCardSprite: {fileID: 3211287697712591694, guid: d0668acb60c05434b9807b2a4ebb7fa8,
     type: 3}

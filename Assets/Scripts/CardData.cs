@@ -7,6 +7,7 @@ public class CardData : ScriptableObject
 {
     public int damage = 0;
     public int shield = 0;
+    public int heal = 0;
     public HealthCondition condition = HealthCondition.None;
     public GameObject playerCardSprite;
     public GameObject enemyCardSprite;

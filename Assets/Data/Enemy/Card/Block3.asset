@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 0
   shield: 3
+  heal: 0
   condition: 0
-  playerCardSprite: {fileID: 0}
+  playerCardSprite: {fileID: 3211287697712591694, guid: 6152b6ae09a1b4116bec239f9df24682,
+    type: 3}
   enemyCardSprite: {fileID: 3211287697712591694, guid: 2228e5ff6fc8c4074aff9482625dfaf1,
     type: 3}
