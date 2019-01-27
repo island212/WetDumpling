@@ -86,7 +86,6 @@ public class CharacterLane : MonoBehaviour
 
     public void AddCharacter(GameObject character, int index)
     {
-        // does not spawn at right position yet
         var newCharacter = Instantiate(character, spawnPositions[index]);
         characters.Add(newCharacter.GetComponent<CharacterComponent>());
     }

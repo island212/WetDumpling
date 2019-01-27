@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
             if (playerLane.IsGameOver())
             {
                 // Game over
-                GameOver();
+                StartCoroutine(GameOver());
             }
 
             Destroy(nextAction.gameObject);
