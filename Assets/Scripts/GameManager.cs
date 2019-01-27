@@ -7,12 +7,19 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
+[Serializable]
+public class level
+{
+    public GameObject[] character;
+}
+
 public class GameManager : MonoBehaviour
 {
     public CharacterLane playerLane;
     public CharacterLane enemyLane;
     public Button endRoundButton;
     public GameObject gameOver;
+    public level[] levels;
 
     private int currentLevel = 0;
     private bool isPlayerGameOver;
@@ -21,6 +28,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        LoadLevel();
+
         for (int i = 0; i < 5; i++)
         {
             var playerActions = playerLane.GetTurnActions();
@@ -147,7 +156,15 @@ public class GameManager : MonoBehaviour
 
     private void LoadLevel()
     {
-        // TODO
+        int index = 0;
+        foreach (GameObject i in levels[currentLevel].character) {
+            if (!levels[currentLevel].character[index])
+            {
+                break;
+            }
+            enemyLane.AddCharacter(i, index);
+            index++;
+        }
     }
 
     IEnumerator GameOver()
