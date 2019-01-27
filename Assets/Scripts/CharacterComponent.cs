@@ -62,6 +62,7 @@ public class CharacterComponent : MonoBehaviour
     private void Attack(int damage)
     {
         Debug.Log($"{gameObject.name} has received {damage} damage");
+        //iTween.ShakeRotation(gameObject, new Vector3(0.2f, 0.2f, 0.0f), 0.5f);
 
         Shield -= damage;
         if (Shield < 0)
