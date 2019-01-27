@@ -1,9 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,34 +14,24 @@ public class GameManager : MonoBehaviour
     public Button endRoundButton;
     public GameObject gameOver;
 
-    public Transform bottomPanel;
     private int currentLevel = 0;
     private bool isPlayerGameOver;
     private bool isEnemyGameOver;
+    public float waitTimeBetweenActions = 0.5f;
 
     void Start()
     {
         for (int i = 0; i < 5; i++)
         {
             var playerActions = playerLane.GetTurnActions();
-//            LogActions(playerActions);
             ShowPlayerHand(playerActions);
         }
 
         var enemyActions = enemyLane.GetTurnActions();
         GenerateEnemyTimeline(enemyActions);
-        //LogActions(enemyActions);
     }
 
-    void LogActions(IEnumerable<CardAction> actions)
-    {
-        foreach (var action in actions)
-        {
-            Debug.Log($"{action.Source.name} {action.Data.name}");
-        }
-    }
-
-    void ShowPlayerHand(IEnumerable<CardAction> cards)
+    private static void ShowPlayerHand(IEnumerable<CardAction> cards)
     {
         foreach (var cardAction in cards)
         {
@@ -48,7 +40,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void GenerateEnemyTimeline(IEnumerable<CardAction> cards)
+    private static void GenerateEnemyTimeline(IEnumerable<CardAction> cards)
     {
         foreach (var cardAction in cards)
         {
@@ -57,40 +49,35 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    GameObject InstantiateCardAction(CardAction card, string tag)
+    private static GameObject InstantiateCardAction(CardAction card, string tag)
     {
-        //TODO load card prefab and add sprite to it based on the tag
-
-        string path = $"Prefabs/Cards/{tag}/{tag}{card.Data.name}";
-        var spritePrefab = Resources.Load<GameObject>(path);
-        var instance = Instantiate(spritePrefab);
+        var prefab = Resources.Load<GameObject>($"Prefabs/Cards/{tag}Card");
+        var instance = Instantiate(prefab);
         instance.GetComponent<CardUI>().Action = card;
+        instance.GetComponent<Image>().sprite = Resources.Load<Sprite>($"Sprites/Card{card.Data.name}");
         return instance;
     }
 
     public void EndRound()
     {
-        Debug.Log("Round Ended");
+        Debug.Log("PlayTimeline Ended");
         // lock player action (mouse)
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         // disable button
         endRoundButton.interactable = false;
 
-        // Start fight animation
-        StartCoroutine(round());
-
-        // start turn todo (draw cards and etc)
+        StartCoroutine(PlayTimeline(SetupNextTurn));
     }
 
-    IEnumerator round()
+    private IEnumerator PlayTimeline(Action done)
     {
         // play animation of attack
         int numCard = TimelineHandler.Instance.GetNumberOfCards();
         for (int i = 0; i < numCard; i++)
         {
             // Do attack things with animation for damage or defence
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(waitTimeBetweenActions);
             var nextAction = TimelineHandler.Instance.RemoveTopCard();
 
             ExecuteAction(nextAction.Action);
@@ -113,7 +100,7 @@ public class GameManager : MonoBehaviour
             TimelineHandler.Instance.updateCanvas();
         }
 
-        SetupNextTurn();
+        done?.Invoke();
     }
 
     void SetupNextTurn()
