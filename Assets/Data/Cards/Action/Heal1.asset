@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Heal1
   m_EditorClassIdentifier: 
   targetData: {fileID: 0}
-  selfData: {fileID: 0}
+  selfData: {fileID: 11400000, guid: 15fa09263478141e29db24b4a6481626, type: 2}

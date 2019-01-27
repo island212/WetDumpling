@@ -17,5 +17,5 @@ MonoBehaviour:
   speed: 1
   baseShield: 3
   actions:
-  - {fileID: 11400000, guid: 09a70d8abd09143d2b14157b3ba768c2, type: 2}
-  - {fileID: 11400000, guid: a7d27459f43951f4780f726a7b7d47d7, type: 2}
+  - {fileID: 11400000, guid: c5b148734cfd6474ab01c7c8157ee341, type: 2}
+  - {fileID: 11400000, guid: aba4f0bcb451042458c4c3d77ad4cdf8, type: 2}

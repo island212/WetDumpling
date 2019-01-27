@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Shield1
   m_EditorClassIdentifier: 
   targetData: {fileID: 0}
-  selfData: {fileID: 0}
+  selfData: {fileID: 11400000, guid: 09a70d8abd09143d2b14157b3ba768c2, type: 2}

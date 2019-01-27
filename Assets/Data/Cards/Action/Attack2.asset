@@ -12,7 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07dc37e8c10ce9c4b92be7ae318777c3, type: 3}
   m_Name: Attack2
   m_EditorClassIdentifier: 
-  targetData: {fileID: 0}
+  targetData: {fileID: 11400000, guid: 7f67ddfd66ed17f459fd2ec378a15f78, type: 2}
   selfData: {fileID: 0}
-  playerCardSprite: {fileID: 0}
-  enemyCardSprite: {fileID: 0}
