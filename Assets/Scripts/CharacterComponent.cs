@@ -28,6 +28,8 @@ public class CharacterComponent : MonoBehaviour
 
     public bool IsPlayer => characterData.isPlayer;
 
+    public bool IsDead => Health <= 0 || Deck.IsEmpty;
+
     private void Awake()
     {
         Health = characterData.baseHealth;

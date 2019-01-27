@@ -10,7 +10,8 @@ public class CharacterLane : MonoBehaviour
 
     private void Awake()
     {
-        characters.AddRange(transform.GetComponentsInChildren<CharacterComponent>());
+        var components = transform.GetComponentsInChildren<CharacterComponent>();
+        characters.AddRange(components);
     }
 
     public IEnumerable<CardAction> GetTurnActions()
@@ -48,15 +49,14 @@ public class CharacterLane : MonoBehaviour
         return characters.Count <= 0; //TODO maybe check if deck is empty
     }
 
-    void UpdateLaneState()
+    private void UpdateLaneState()
     {
         var charsToRemove = new List<CharacterComponent>();
+
         foreach (var character in characters)
         {
-            if (character.Health <= 0)
-            {
+            if (character.IsDead) 
                 charsToRemove.Add(character);
-            }
         }
 
         foreach (var character in charsToRemove)

@@ -6,17 +6,20 @@ using Utils;
 public class Deck
 {
     private IList<CardActionData> cards;
-    private readonly IList<CardActionData> fullDeck;
+    public IList<CardActionData> FullDeck { get; }
+
+    public int Count => cards.Count;
+    public bool IsEmpty => cards.Count <= 0;
 
     public Deck(IEnumerable<CardActionData> cards)
     {
-        fullDeck = new List<CardActionData>(cards);
-        this.cards = fullDeck;
+        FullDeck = new List<CardActionData>(cards);
+        this.cards = FullDeck;
     }
 
     public Deck Shuffle()
     {
-        cards = fullDeck;
+        cards = FullDeck;
         cards.Shuffle();
         return this;
     }
@@ -47,19 +50,9 @@ public class Deck
     {
         foreach (var card in newCards)
         {
-            fullDeck.Add(card);
+            FullDeck.Add(card);
         }
 
-        return fullDeck;
-    }
-
-    public IList<CardActionData> GetFullDeck()
-    {
-        return fullDeck;
-    }
-
-    public int Count()
-    {
-        return cards.Count;
-    }
+        return FullDeck;
+    }    
 }
