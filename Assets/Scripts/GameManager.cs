@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
         // play animation of attack
         int numCard = TimelineHandler.Instance.getNumberOfCards();
         for (int i = 0; i < numCard; i++) {
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             Transform nextAction = TimelineHandler.Instance.removeTopCard();
             // Do attack things with animation for damage or defence
             Destroy(nextAction.gameObject);

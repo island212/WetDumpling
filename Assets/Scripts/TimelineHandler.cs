@@ -15,7 +15,7 @@ public class TimelineHandler : MonoBehaviour
     public float cardScale;
 
     [SerializeField]
-    private int maxCards;
+    private int maxCards = 0;
     private int cardCount = 0;
     private GameObject ghostCardHolder = null;
 
@@ -24,7 +24,6 @@ public class TimelineHandler : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {

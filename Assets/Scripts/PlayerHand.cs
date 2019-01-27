@@ -8,14 +8,13 @@ public class PlayerHand : MonoBehaviour
     public float cardScale;
 
     [SerializeField]
-    private int maxCards;
+    private int maxCards = 0;
 
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {

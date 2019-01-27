@@ -22,7 +22,7 @@ public class CharacterComponent : MonoBehaviour
 
     private void Awake()
     {
-        Health = characterData.maxHealth;
+        Health = characterData.baseHealth;
         Deck = new Deck(characterData.actions);
     }
 
@@ -49,8 +49,6 @@ public class CharacterComponent : MonoBehaviour
     {
         Debug.Log(gameObject.name + " has healed " + heal);
         Health += heal;
-        if (Health > characterData.maxHealth)
-            Health = characterData.maxHealth;
     }
 
     public void AddShield(int shield)
