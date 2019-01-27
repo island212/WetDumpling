@@ -60,7 +60,6 @@ public class GameManager : MonoBehaviour
 
     public void EndRound()
     {
-        Debug.Log("PlayTimeline Ended");
         // lock player action (mouse)
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -103,7 +102,7 @@ public class GameManager : MonoBehaviour
         done?.Invoke();
     }
 
-    void SetupNextTurn()
+    private void SetupNextTurn()
     {
         // unlock player
         Cursor.visible = true;
@@ -119,26 +118,24 @@ public class GameManager : MonoBehaviour
         ShowPlayerHand(playerActions);
     }
 
-    void ExecuteAction(CardAction action)
+    private void ExecuteAction(CardAction action)
     {
         var targetData = action.Data.targetData;
         var selfData = action.Data.selfData;
 
         if (action.Source.IsPlayer)
         {
-            Debug.Log($"execute player action target: {targetData == null} self: {selfData == null}");
-            if (action.Data.selfData != null)
-                playerLane.ExecuteAction(action.Data.selfData);
+            if (selfData != null)
+                playerLane.ExecuteAction(selfData);
             if (targetData != null)
-                enemyLane.ExecuteAction(action.Data.targetData);
+                enemyLane.ExecuteAction(targetData);
         }
         else
         {
-            Debug.Log($"execute enemy action target: {targetData == null} self: {selfData == null}");
             if (action.Data.selfData != null)
-                enemyLane.ExecuteAction(action.Data.selfData);
+                enemyLane.ExecuteAction(selfData);
             if (targetData != null)
-                playerLane.ExecuteAction(action.Data.targetData);
+                playerLane.ExecuteAction(targetData);
         }
     }
 

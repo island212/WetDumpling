@@ -17,12 +17,6 @@ public class CardUI : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnte
     private int oldChildIndex;
     private bool inserted = false;
 
-    struct Movement
-    {
-        Vector3 oldPos;
-        Vector3 newPos;
-    }
-
     public void OnBeginDrag(PointerEventData eventData)
     {
         if (!draggable)
@@ -41,15 +35,15 @@ public class CardUI : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnte
 
         transform.position = Input.mousePosition;
 
-        List<RaycastResult> hits = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventData, hits);
-        foreach (RaycastResult i in hits)
-        {
-            if (i.gameObject.tag == "TimelinePanel")
-            {
+        //var hits = new List<RaycastResult>();
+        //EventSystem.current.RaycastAll(eventData, hits);
+        //foreach (var raycastResult in hits)
+        //{
+        //    if (raycastResult.gameObject.tag == "TimelinePanel")
+        //    {
 
-            }
-        }
+        //    }
+        //}
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -57,16 +51,16 @@ public class CardUI : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnte
         if (!draggable)
           return;
 
-        List<RaycastResult> hits = new List<RaycastResult>();
+        var hits = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventData, hits);
-        foreach (RaycastResult i in hits)
+        foreach (var raycastResult in hits)
         {
-            if (i.gameObject.tag == "TimelinePanel")
+            if (raycastResult.gameObject.CompareTag("TimelinePanel"))
             {
                 TimelineHandler.Instance.AddCardFromBoard(gameObject);
                 inserted = true;
             }
-            else if (i.gameObject.tag == "PlayerhandPanel")
+            else if (raycastResult.gameObject.CompareTag("PlayerhandPanel"))
             {
                 PlayerHand.Instance.AddCardFromBoard(gameObject);
                 inserted = true;

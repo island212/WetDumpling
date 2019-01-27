@@ -6,8 +6,7 @@ using UnityEditor;
 
 public class CharacterLane : MonoBehaviour
 {
-    [SerializeField]
-    private List<CharacterComponent> characters = null;
+    [SerializeField] private List<CharacterComponent> characters = null;
 
     private void Awake()
     {
@@ -20,55 +19,33 @@ public class CharacterLane : MonoBehaviour
         foreach (var character in characters)
         {
             bool isPlayer = character.IsPlayer;
-            var cards = isPlayer ? GetPlayerCards(character): GetEnemyCards(character);
-            cardActions.AddRange(
-                cards.Select(card => 
-                    new CardAction
-                    {
-                        Data = card, 
-                        Source = character
-                    }
-                )
-            );
+            var cards = isPlayer ? GetPlayerCards(character) : GetEnemyCards(character);
+
+            cardActions.AddRange(cards.Select(cardActionData => new CardAction {Data = cardActionData, Source = character}));
         }
 
         return cardActions.Shuffle();
     }
 
-    private static IList<CardActionData> GetPlayerCards(CharacterComponent player) => 
+    private static IList<CardActionData> GetPlayerCards(CharacterComponent player) =>
         player.Deck.GetCards(player.characterData.speed, true);
 
     private static IList<CardActionData> GetEnemyCards(CharacterComponent enemy) =>
         enemy.Deck
-            .Shuffle()
-            .GetCards(enemy.characterData.speed, false);
-
-    public bool CanTakeActions()
-    {
-        return true;
-    }
-
-    public void RemoveAllConditions()
-    {
-        foreach (var character in characters)
-        {
-            character.RemoveAllCondition();
-        }
-    }
+             .Shuffle()
+             .GetCards(enemy.characterData.speed, false);
 
     public void ExecuteAction(CardData data)
     {
-        if (!CanTakeActions()) 
-            return;
+        //TODO check if the action is a push and move the character by the specified amount
 
         characters[0].ExecuteAction(data);
     }
 
-    // Check for level or game over
     public bool IsGameOver()
     {
         UpdateLaneState();
-        return characters.Count <= 0;
+        return characters.Count <= 0; //TODO maybe check if deck is empty
     }
 
     void UpdateLaneState()
@@ -89,10 +66,10 @@ public class CharacterLane : MonoBehaviour
         }
     }
 
-    public void addCharacter(GameObject character)
+    public void AddCharacter(GameObject character)
     {
         // does not spawn at right position yet
-        GameObject newCharacter = Instantiate(character, transform);
+        var newCharacter = Instantiate(character, transform);
         characters.Add(newCharacter.GetComponent<CharacterComponent>());
     }
 }

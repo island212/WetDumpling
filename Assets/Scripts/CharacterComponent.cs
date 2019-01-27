@@ -1,10 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Serialization;
 using UnityEngine;
 
 [System.Flags]
-public enum HealthCondition { None = 0, Stunned = 1 << 1, Weakened = 1 << 2 }
+public enum HealthCondition
+{
+    None = 0,
+    Stunned = 1 << 1,
+    Weakened = 1 << 2
+}
 
 public class CharacterComponent : MonoBehaviour
 {
@@ -18,7 +24,7 @@ public class CharacterComponent : MonoBehaviour
     public Deck Deck { get; private set; }
 
     private int status;
-    public HealthCondition Status => (HealthCondition)status;
+    public HealthCondition Status => (HealthCondition) status;
 
     public bool IsPlayer => characterData.isPlayer;
 
@@ -33,32 +39,27 @@ public class CharacterComponent : MonoBehaviour
     {
         var condition = action.condition;
         if (condition != HealthCondition.None)
-        {
             AddCondition(condition);
-        }
 
-        AddShield(action.shield);
-
-        var damage = action.damage;
-        if (damage > 0)
-        {
-            Attack(damage);
-        }
-
-        var healing = action.heal;
-        if (healing > 0)
-        {
+        int healing = action.heal;
+        if (healing != 0)
             Heal(healing);
-        }
+
+        int shield = action.shield;
+        if(shield != 0)
+            AddShield(shield);
+
+        int damage = action.damage;
+        if (damage != 0)
+            Attack(damage);
 
         LifeValue.SetLife(Health);
         LifeValue.SetShield(Shield);
     }
 
-    public void Attack(int damage)
-    {   
-        if(damage != 0)
-            Debug.Log($"{gameObject.name} has received {damage} damage");
+    private void Attack(int damage)
+    {
+        Debug.Log($"{gameObject.name} has received {damage} damage");
 
         Shield -= damage;
         if (Shield < 0)
@@ -68,28 +69,27 @@ public class CharacterComponent : MonoBehaviour
         }
     }
 
-    public void Heal(int amount)
+    private void Heal(int amount)
     {
         Debug.Log($"{gameObject.name} has healed {amount}");
         Health += amount;
     }
 
-    public void AddShield(int shield)
+    private void AddShield(int shield)
     {
-        if(shield != 0)
-            Debug.Log($"{gameObject.name} has received {shield} shields");
+        Debug.Log($"{gameObject.name} has received {shield} shields");
         Shield += shield;
     }
 
-    public void AddCondition(HealthCondition condition)
+    private void AddCondition(HealthCondition condition)
     {
-        status |= (int)condition;
+        status |= (int) condition;
     }
 
-    public void RemoveCondition(HealthCondition condition)
+    private void RemoveCondition(HealthCondition condition)
     {
-        status |= (int)condition;
-        status ^= (int)condition;
+        status |= (int) condition;
+        status ^= (int) condition;
     }
 
     public void RemoveAllCondition()
