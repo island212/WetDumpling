@@ -40,14 +40,14 @@ public class TurnPlayer : MonoBehaviour
 
             CharacterLane targetedLane = action.Target == TargetType.Player ? playersLane : enemiesLane;
 
-            targetedLane.Hit(action.Data.damage, action.Data.condition);
+            //targetedLane.Hit(action.Data.damage, action.Data.condition);
 
             if (action.Data.shield > 0)
             {
                 action.Source.AddShield(action.Data.shield);
             }
 
-            TimelineHandler.Instance.removeTopCard();
+            TimelineHandler.Instance.RemoveTopCard();
         }
     }
 }
