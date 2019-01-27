@@ -11,10 +11,16 @@ public class CharacterLane : MonoBehaviour
 
     private void Awake()
     {
-        Transform[] components = transform.GetComponentsInChildren<Transform>().Where(r => r.tag == "Enemy").ToArray();
-        if (components.Length > 1)
+        Transform[] spawns = transform.GetComponentsInChildren<Transform>().Where(r => r.tag == "Enemy").ToArray();
+        if (spawns.Length > 0)
         {
-            spawnPositions = new List<Transform>(components);
+            spawnPositions = new List<Transform>(spawns);
+        }
+
+        Transform[] components = transform.GetComponentsInChildren<Transform>().Where(r => r.tag == "Entity").ToArray();
+        if (components.Length > 0)
+        {
+            characters.Add(components[0].GetComponent<CharacterComponent>());
         }
     }
 
