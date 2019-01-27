@@ -87,3 +87,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 671e9f466292857449a211ec712a6a63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  draggable: 1

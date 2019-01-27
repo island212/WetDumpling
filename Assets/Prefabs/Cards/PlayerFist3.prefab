@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 3211287697712591695}
   - component: {fileID: 3211287697712591693}
   - component: {fileID: 3211287697712591692}
-  - component: {fileID: 825522810316498723}
-  - component: {fileID: 2824956436145710801}
+  - component: {fileID: 8890823417776117989}
   m_Layer: 5
-  m_Name: EnemyBlock2
+  m_Name: PlayerFist3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +28,7 @@ RectTransform:
   m_GameObject: {fileID: 3211287697712591694}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -67,7 +66,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 50cbcb3e5d5104909b67b75e7835cd9e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dd8c3272024d4464d8bec469088586b4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -76,22 +75,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
---- !u!114 &825522810316498723
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3211287697712591694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 2, y: 2}
-  m_UseGraphicAlpha: 0
---- !u!114 &2824956436145710801
+--- !u!114 &8890823417776117989
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,4 +87,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 671e9f466292857449a211ec712a6a63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  draggable: 0
+  draggable: 1
