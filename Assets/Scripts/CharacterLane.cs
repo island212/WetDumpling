@@ -36,14 +36,18 @@ public class CharacterLane : MonoBehaviour
             bool isPlayer = character.IsPlayer;
             var cards = isPlayer ? GetPlayerCards(character) : GetEnemyCards(character);
 
-            cardActions.AddRange(cards.Select(cardActionData => new CardAction {Data = cardActionData, Source = character}));
+            cardActions.AddRange(cards.Select(cardActionData => new CardAction
+            {
+                Data = cardActionData,
+                Source = character
+            }));
         }
 
         return cardActions.Shuffle();
     }
 
     private static IList<CardActionData> GetPlayerCards(CharacterComponent player) =>
-        player.Deck.GetCards(player.characterData.speed, true);
+        player.Deck.Shuffle().GetCards(player.characterData.speed);
 
     private static IList<CardActionData> GetEnemyCards(CharacterComponent enemy) =>
         enemy.Deck
@@ -54,12 +58,13 @@ public class CharacterLane : MonoBehaviour
     {
         int pushIndex = data.push;
 
-        if (pushIndex != 0 && characters.Count <= pushIndex)
+        if (pushIndex != 0)
         {
             var charToPush = characters[0];
             var nextChar = characters[pushIndex];
             characters[pushIndex] = charToPush;
             characters[0] = nextChar;
+            UpdateLaneState();
         }
 
         characters[0].ExecuteAction(data);
@@ -77,7 +82,7 @@ public class CharacterLane : MonoBehaviour
 
         foreach (var character in characters)
         {
-            if (character.IsDead) 
+            if (character.IsDead)
                 charsToRemove.Add(character);
         }
 
