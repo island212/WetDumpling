@@ -92,12 +92,18 @@ public class CharacterLane : MonoBehaviour
             Destroy(character.gameObject);
         }
 
-
+        if (spawnPositions.Count > 0)
+        {
+            for (int i = 0; i < characters.Count; i++)
+            {
+                iTween.MoveTo(characters[i].gameObject, spawnPositions[i].position, 1.0f);
+            }
+        }
     }
 
     public void AddCharacter(GameObject character, int index)
     {
-        var newCharacter = Instantiate(character, spawnPositions[index]);
+        var newCharacter = Instantiate(character, spawnPositions[index].position, Quaternion.identity);
         characters.Add(newCharacter.GetComponent<CharacterComponent>());
     }
 

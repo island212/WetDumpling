@@ -61,7 +61,7 @@ public class CharacterComponent : MonoBehaviour
 
     public void ResetDeck()
     {
-        Deck = new Deck(characterData.actions);
+        Deck.Shuffle();
     }
 
     private void Attack(int damage)
