@@ -7,12 +7,12 @@ using Utils;
 
 public class Deck
 {
-    private IList<CardData> cards;
-    private readonly IList<CardData> fullDeck;
+    private IList<CardActionData> cards;
+    private readonly IList<CardActionData> fullDeck;
 
-    public Deck(IEnumerable<CardData> cards)
+    public Deck(IEnumerable<CardActionData> cards)
     {
-        fullDeck = new List<CardData>(cards);
+        fullDeck = new List<CardActionData>(cards);
         this.cards = fullDeck;
     }
 
@@ -23,14 +23,14 @@ public class Deck
         return this;
     }
 
-    public IList<CardData> GetCards(int amount)
+    public IList<CardActionData> GetCards(int amount)
     {
         return GetCards(amount, true);
     }
 
-    public IList<CardData> GetCards(int amount, bool allowRemove)
+    public IList<CardActionData> GetCards(int amount, bool allowRemove)
     {
-        var output = new List<CardData>();
+        var output = new List<CardActionData>();
 
         if (amount > cards.Count)
             amount = cards.Count;
@@ -46,7 +46,7 @@ public class Deck
         return output;
     }
 
-    public IList<CardData> AddCards(IList<CardData> newCards)
+    public IList<CardActionData> AddCards(IList<CardActionData> newCards)
     {
         foreach (var card in newCards)
         {
@@ -56,7 +56,7 @@ public class Deck
         return fullDeck;
     }
 
-    public IList<CardData> GetFullDeck()
+    public IList<CardActionData> GetFullDeck()
     {
         return fullDeck;
     }

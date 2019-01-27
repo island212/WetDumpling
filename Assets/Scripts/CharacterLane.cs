@@ -26,8 +26,7 @@ public class CharacterLane : MonoBehaviour
                     new CardAction
                     {
                         Data = card, 
-                        Source = character, 
-                        Target = isPlayer ? TargetType.Enemy : TargetType.Player
+                        Source = character
                     }
                 )
             );
@@ -36,10 +35,10 @@ public class CharacterLane : MonoBehaviour
         return cardActions.Shuffle();
     }
 
-    private static IList<CardData> GetPlayerCards(CharacterComponent player) => 
+    private static IList<CardActionData> GetPlayerCards(CharacterComponent player) => 
         player.Deck.GetCards(player.characterData.speed, true);
 
-    private static IList<CardData> GetEnemyCards(CharacterComponent enemy) =>
+    private static IList<CardActionData> GetEnemyCards(CharacterComponent enemy) =>
         enemy.Deck
             .Shuffle()
             .GetCards(enemy.characterData.speed, false);

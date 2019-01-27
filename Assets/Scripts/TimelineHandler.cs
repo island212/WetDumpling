@@ -41,15 +41,14 @@ public class TimelineHandler : MonoBehaviour
         return transform.GetComponentsInChildren<CardUI>().Select(x => x.Action);
     }
 
-    public bool AddCard(CardAction action)
+    public bool AddCard(GameObject card)
     {
         if (GetNumberOfCards() > maxCards)
         {
             return false;
         }
 
-        GameObject card = Instantiate(action.Data.enemyCardSprite, transform);
-        card.GetComponent<CardUI>().Action = action;
+        card.transform.SetParent(transform);
         return true;
     }
 

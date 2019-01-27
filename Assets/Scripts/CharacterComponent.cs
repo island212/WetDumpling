@@ -29,11 +29,6 @@ public class CharacterComponent : MonoBehaviour
         Deck = new Deck(characterData.actions);
     }
 
-    public CardData ChooseAction()
-    {
-        return characterData.actions[Random.Range(0, characterData.actions.Length)];
-    }
-
     public void ExecuteAction(CardData action)
     {
         var condition = action.condition;

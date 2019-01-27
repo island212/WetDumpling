@@ -34,24 +34,36 @@ public class GameManager : MonoBehaviour
 
     void LogActions(IEnumerable<CardAction> actions)
     {
-        foreach (var turnAction in actions)
+        foreach (var action in actions)
         {
-            Debug.Log($"{turnAction.Source.name} {turnAction.Data.name}");
+            Debug.Log($"{action.Source.name} {action.Data.name}");
         }
     }
 
     void ShowPlayerHand(IEnumerable<CardAction> cards) {
-        foreach (var card in cards) {
-            var instance = Instantiate(card.Data.playerCardSprite);
-            instance.GetComponent<CardUI>().Action = card;
-            PlayerHand.Instance.AddCard(instance);
+        foreach (var cardAction in cards)
+        {
+            var card = InstantiateCardAction(cardAction, "Player");
+            PlayerHand.Instance.AddCard(card);
         }
     }
 
     void GenerateBaseTimeline(IEnumerable<CardAction> cards) {
-        foreach (var card in cards) {
+        foreach (var cardAction in cards)
+        {
+            var card = InstantiateCardAction(cardAction, "Enemy");
             TimelineHandler.Instance.AddCard(card);
         }
+    }
+
+    GameObject InstantiateCardAction(CardAction card, string tag)
+    {
+        string path = $"Prefabs/Cards/{tag}/{tag}{card.Data.name}";
+        Debug.Log(path);
+        var spritePrefab = Resources.Load<GameObject>(path);
+        var instance = Instantiate(spritePrefab);
+        instance.GetComponent<CardUI>().Action = card;
+        return instance;
     }
 
     void Update()
@@ -122,14 +134,21 @@ public class GameManager : MonoBehaviour
 
     void ExecuteAction(CardAction action)
     {
-        switch (action.Target)
+        var targetData = action.Data.targetData;
+        var selfData = action.Data.selfData;
+        if (action.Source.IsPlayer)
         {
-           case TargetType.Player:
-               playerLane.ExecuteAction(action.Data);
-               break;
-           case TargetType.Enemy:
-               enemyLane.ExecuteAction(action.Data);
-               break;
+            if(selfData != null)
+                playerLane.ExecuteAction(selfData);
+            if(targetData != null)
+                enemyLane.ExecuteAction(targetData);
+        }
+        else
+        {
+            if(selfData != null)
+                enemyLane.ExecuteAction(selfData);
+            if(targetData != null)
+                playerLane.ExecuteAction(targetData);
         }
     }
 

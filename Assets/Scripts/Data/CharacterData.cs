@@ -10,5 +10,5 @@ public class CharacterData : ScriptableObject
 {
     public bool isPlayer;
     public int baseHealth, speed, baseShield;
-    public CardData[] actions;
+    public CardActionData[] actions;
 }
