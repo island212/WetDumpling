@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 177402880e8089240b56a6c5e95398f2, type: 3}
-  m_Name: Attack1
+  m_Script: {fileID: 11500000, guid: 07dc37e8c10ce9c4b92be7ae318777c3, type: 3}
+  m_Name: Push1
   m_EditorClassIdentifier: 
-  damage: 1
-  shield: 0
-  heal: 0
-  condition: 0
-  push: 0
+  targetData: {fileID: 11400000, guid: 501544caa6bef8e4fa74ae5dba0a9866, type: 2}
+  selfData: {fileID: 0}

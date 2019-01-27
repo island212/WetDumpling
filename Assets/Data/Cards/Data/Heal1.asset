@@ -16,7 +16,4 @@ MonoBehaviour:
   shield: 0
   heal: 1
   condition: 0
-  playerCardSprite: {fileID: 3211287697712591694, guid: 11f1044655dd448c5b3725c5ea5e5c1f,
-    type: 3}
-  enemyCardSprite: {fileID: 3211287697712591694, guid: 4486bf777e9104f0ebd268c72e123c4a,
-    type: 3}
+  push: 0
