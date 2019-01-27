@@ -1052,6 +1052,8 @@ MonoBehaviour:
   levels:
   - character:
     - {fileID: 4488394995825040636, guid: 630722e561530458785bc75077bb1524, type: 3}
+  - character:
+    - {fileID: 4488394995825040636, guid: 630722e561530458785bc75077bb1524, type: 3}
     - {fileID: 4488394995825040636, guid: 630722e561530458785bc75077bb1524, type: 3}
     - {fileID: 4488394995825040636, guid: 630722e561530458785bc75077bb1524, type: 3}
   - character:
@@ -1061,6 +1063,15 @@ MonoBehaviour:
   - character:
     - {fileID: 4488394995825040636, guid: 630722e561530458785bc75077bb1524, type: 3}
     - {fileID: 811244484, guid: 5fdfed88b35b1462e8905e371a9be6d1, type: 3}
+  - character:
+    - {fileID: 4488394995825040636, guid: 630722e561530458785bc75077bb1524, type: 3}
+    - {fileID: 811244484, guid: 5fdfed88b35b1462e8905e371a9be6d1, type: 3}
+    - {fileID: 4488394995825040636, guid: 2f38063bc22744f87b006aa0b18fd02c, type: 3}
+  - character:
+    - {fileID: 4488394995825040636, guid: 630722e561530458785bc75077bb1524, type: 3}
+    - {fileID: 4488394995825040636, guid: 630722e561530458785bc75077bb1524, type: 3}
+    - {fileID: 811244484, guid: 5fdfed88b35b1462e8905e371a9be6d1, type: 3}
+    - {fileID: 4488394995825040636, guid: 2f38063bc22744f87b006aa0b18fd02c, type: 3}
   waitTimeBetweenActions: 1
 --- !u!4 &704832012
 Transform:

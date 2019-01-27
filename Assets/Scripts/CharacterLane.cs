@@ -9,6 +9,8 @@ public class CharacterLane : MonoBehaviour
     [SerializeField] private List<CharacterComponent> characters = null;
     public List<Transform> spawnPositions = null;
 
+    private CharacterComponent currentTarget;
+
     private void Awake()
     {
         var spawns = transform.GetComponentsInChildren<Transform>()
@@ -22,6 +24,7 @@ public class CharacterLane : MonoBehaviour
         var components = transform.GetComponentsInChildren<Transform>()
                                   .Where(r => r.CompareTag("Entity"))
                                   .ToArray();
+
         if (components.Length > 0)
         {
             characters.Add(components[0].GetComponent<CharacterComponent>());
@@ -43,11 +46,11 @@ public class CharacterLane : MonoBehaviour
             }));
         }
 
-        return cardActions.Shuffle();
+        return cardActions;
     }
 
     private static IList<CardActionData> GetPlayerCards(CharacterComponent player) =>
-        player.Deck.Shuffle().GetCards(player.characterData.speed);
+        player.Deck.GetCards(player.characterData.speed);
 
     private static IList<CardActionData> GetEnemyCards(CharacterComponent enemy) =>
         enemy.Deck
@@ -56,18 +59,29 @@ public class CharacterLane : MonoBehaviour
 
     public void ExecuteAction(CardData data)
     {
+        currentTarget = characters.First();
+
+        HandlePush(data);
+
+        currentTarget.ExecuteAction(data);
+    }
+
+    private void HandlePush(CardData data)
+    {
+        if (characters.Count <= 1) 
+            return;
+
         int pushIndex = data.push;
 
-        if (pushIndex > 0)
-        {
-            var charToPush = characters[0];
-            var nextChar = characters[pushIndex];
-            characters[pushIndex] = charToPush;
-            characters[0] = nextChar;
-            UpdateLaneState();
-        }
+        if (pushIndex <= 0) 
+            return;
 
-        characters[0].ExecuteAction(data);
+        if (pushIndex > characters.Count)
+            pushIndex = characters.Count;
+
+        characters.Remove(currentTarget);
+        characters.Insert(pushIndex, currentTarget);
+        UpdateLaneState();
     }
 
     public bool IsGameOver()
@@ -92,12 +106,12 @@ public class CharacterLane : MonoBehaviour
             Destroy(character.gameObject);
         }
 
-        if (spawnPositions.Count > 0)
+        if (spawnPositions.Count <= 0) 
+            return;
+
+        for (int i = 0; i < characters.Count; i++)
         {
-            for (int i = 0; i < characters.Count; i++)
-            {
-                iTween.MoveTo(characters[i].gameObject, spawnPositions[i].position, 1.0f);
-            }
+            iTween.MoveTo(characters[i].gameObject, spawnPositions[i].position, 1.0f);
         }
     }
 
@@ -109,9 +123,9 @@ public class CharacterLane : MonoBehaviour
 
     public CharacterComponent getPlayer()
     {
-        foreach (CharacterComponent i in characters)
+        foreach (var i in characters)
         {
-            if (i.tag == "Entity")
+            if (i.CompareTag("Entity"))
             {
                 return i;
             }

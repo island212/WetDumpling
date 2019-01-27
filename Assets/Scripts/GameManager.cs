@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public Button endRoundButton;
     public GameObject gameOver;
     public Fade intermission;
-	public GameObject playerPos;
+    public GameObject playerPos;
     public GameObject enemyPos;
     public GameObject selectCardScreen;
     public level[] levels;
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         // disable button
         endRoundButton.interactable = false;
-
+        
         StartCoroutine(PlayTimeline(SetupNextTurn));
     }
 
@@ -115,11 +115,10 @@ public class GameManager : MonoBehaviour
             TimelineHandler.Instance.updateCanvas();
         }
 
-        
         done?.Invoke();
     }
 
-    private void SetupNextTurn()
+    private void SetupNextTurn(bool shouldDraw)
     {
         // unlock player
         Cursor.visible = true;
@@ -131,90 +130,108 @@ public class GameManager : MonoBehaviour
 
         GenerateEnemyTimeline(enemyCards);
 
-        var playerActions = playerLane.GetTurnActions();
-        ShowPlayerHand(playerActions);
+        if (shouldDraw)
+        {
+            var playerActions = playerLane.GetTurnActions();
+        
+            ShowPlayerHand(playerActions);
+        }
+    }
+
+    private void SetupNextTurn()
+    {
+        SetupNextTurn(true);
     }
 
     private IEnumerator ExecuteAction(CardAction action)
     {
+        if (action.Source.IsPlayer)
+            yield return ExecutePlayerAction(action);
+        else
+            yield return ExecuteEnemyAction(action);
+    }
+
+    private IEnumerator ExecutePlayerAction(CardAction action)
+    {
         var targetData = action.Data.targetData;
         var selfData = action.Data.selfData;
 
-        if (action.Source.IsPlayer)
-        {
-            if (selfData != null)
-                playerLane.ExecuteAction(selfData);
+        if (selfData != null)
+            yield return SelfAnimation(playerLane, selfData, action);
 
-            if (targetData != null) 
-            {
-                if (targetData.damage > 0)
-                {
-                    Vector3 initialPos = action.Source.gameObject.transform.GetChild(0).gameObject.transform.position;
-                    iTween.MoveTo(action.Source.gameObject.transform.GetChild(0).gameObject,
-                      iTween.Hash("position", enemyPos.transform.position,
-                                  "easeType", "easeInQuart",
-                                  "time", 0.49f));
+        if (targetData == null)
+            yield break;
 
-                    iTween.MoveTo(action.Source.gameObject.transform.GetChild(0).gameObject,
-                      iTween.Hash("position", initialPos,
-                                  "time", 0.49f,
-                                  "delay", 0.49f));
-
-                    yield return StartCoroutine(ExecuteWithCoroutine(enemyLane, targetData));
-                }
-                else
-                {
-                    enemyLane.ExecuteAction(targetData);
-                }
-            }
-        }
+        if (targetData.damage > 0)
+            yield return TargetAnimation(enemyPos, enemyLane, targetData, action);
         else
-        {
-
-            if (selfData != null)
-            {
-                // Animations de shield/heal ici.              
-
-                enemyLane.ExecuteAction(selfData);
-            }
-
-            if (targetData != null) 
-            {
-               if (targetData.damage > 0) 
-               {
-                  if (action.Source != null)
-                  {
-                      Vector3 initialPos = action.Source.gameObject.transform.GetChild(0).gameObject.transform.position;
-                      iTween.MoveTo(action.Source.gameObject.transform.GetChild(0).gameObject,
-                        iTween.Hash("position", playerPos.transform.position,
-                                    "easeType", "easeInQuart",
-                                    "time", 0.5f));
-
-                      iTween.MoveTo(action.Source.gameObject.transform.GetChild(0).gameObject,
-                        iTween.Hash("position", initialPos,
-                                    "time", 0.5f,
-                                    "delay", 0.5f));
-
-                      yield return StartCoroutine(ExecuteWithCoroutine(playerLane, targetData));
-                  }
-               }
-               else 
-               {
-                  playerLane.ExecuteAction(targetData);
-               }
-            }
-        }
+            enemyLane.ExecuteAction(targetData);
     }
 
-    private IEnumerator ExecuteWithCoroutine(CharacterLane lane, CardData data) 
+    IEnumerator ExecuteEnemyAction(CardAction action)
     {
-        yield return new WaitForSeconds(waitTimeBetweenActions / 2);
+        var targetData = action.Data.targetData;
+        var selfData = action.Data.selfData;
+
+        if (selfData != null)
+            yield return SelfAnimation(enemyLane, selfData, action);
+
+        if (targetData == null)
+            yield break;
+
+        if (targetData.damage > 0)
+            yield return TargetAnimation(playerPos, playerLane, targetData, action);
+        else
+            playerLane.ExecuteAction(targetData);
+    }
+
+    IEnumerator SelfAnimation(CharacterLane lane, CardData data, CardAction action)
+    {
+        if (action.Source == null)
+            yield break;
+
+        var initialPos = action.Source.gameObject.transform.GetChild(0).gameObject.transform.position;
+        iTween.MoveTo(action.Source.gameObject.transform.GetChild(0).gameObject,
+            iTween.Hash(
+                "position", new Vector3(initialPos.x, initialPos.y + .3f, initialPos.z),
+                "time", 0.25f));
+
+        iTween.MoveTo(action.Source.gameObject.transform.GetChild(0).gameObject,
+            iTween.Hash("position", initialPos,
+                "time", 0.25f,
+                "delay", 0.25f));
+
+        yield return StartCoroutine(ExecuteWithCoroutine(lane, data, waitTimeBetweenActions / 4));
+    }
+
+    IEnumerator TargetAnimation(GameObject pos, CharacterLane lane, CardData data, CardAction action)
+    {
+        if (action.Source == null)
+            yield break;
+
+        var initialPos = action.Source.gameObject.transform.GetChild(0).gameObject.transform.position;
+        iTween.MoveTo(action.Source.gameObject.transform.GetChild(0).gameObject,
+            iTween.Hash("position", pos.transform.position,
+                "easeType", "easeInQuart",
+                "time", 0.5f));
+
+        iTween.MoveTo(action.Source.gameObject.transform.GetChild(0).gameObject,
+            iTween.Hash("position", initialPos,
+                "time", 0.5f,
+                "delay", 0.5f));
+
+        yield return StartCoroutine(ExecuteWithCoroutine(lane, data, waitTimeBetweenActions / 2));
+    }
+
+    private IEnumerator ExecuteWithCoroutine(CharacterLane lane, CardData data, float time)
+    {
+        yield return new WaitForSeconds(time);
         lane.ExecuteAction(data);
     }
 
     private void ToNextLevel()
     {
-        
+        PlayerHand.Instance.Clear();
         currentLevel++;
         StartCoroutine(LoadLevel());
     }
@@ -228,6 +245,8 @@ public class GameManager : MonoBehaviour
             fadeObj.GetComponent<Animation>().Play("Fade");
         }
         yield return new WaitForSeconds(0.5f);
+        
+        playerLane.getPlayer().Deck.Shuffle();
         PlayerHand.Instance.Clear();
 
         // Select card
@@ -251,19 +270,22 @@ public class GameManager : MonoBehaviour
         {
             var playerActions = playerLane.GetTurnActions();
             ShowPlayerHand(playerActions);
+            Debug.Log($"{i}: {playerActions.First()}");
         }
 
         int index = 0;
-        foreach (var i in levels[currentLevel].character) {
+        foreach (var i in levels[currentLevel].character)
+        {
             if (!levels[currentLevel].character[index])
             {
                 break;
             }
+
             enemyLane.AddCharacter(i, index);
             index++;
         }
 
-        SetupNextTurn();
+        SetupNextTurn(false);
 
         firstLoad = false;
     }

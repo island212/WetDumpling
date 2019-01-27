@@ -41,6 +41,7 @@ public class PlayerHand : MonoBehaviour
 
     public bool AddCard(GameObject card)
     {
+        Debug.Log($"AJOUT DE CARD: {card.name}");
         if (GetNumberOfCards() > maxCards)
         {
             return false;
