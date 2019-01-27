@@ -10,7 +10,7 @@ public class SelectCard : MonoBehaviour
     public CardActionData[] cardActions;
     public CharacterLane playerLane;
     private bool hasPicked;
-    private GameObject pickedCard;
+    private CardActionData pickedCard;
     public GameObject[] objects;
 
     private void Awake()
@@ -58,7 +58,7 @@ public class SelectCard : MonoBehaviour
 
     public void setPicked(GameObject card)
     {
-        pickedCard = card;
+        pickedCard = card.GetComponent<CardUI>().Action.Data;
         hasPicked = true;
         for (int i = 0; i < 3; i++)
         {
@@ -66,7 +66,7 @@ public class SelectCard : MonoBehaviour
         }
     }
 
-    public GameObject returnCard()
+    public CardActionData returnCard()
     {
         return pickedCard;
     }

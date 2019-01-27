@@ -247,14 +247,17 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         
         playerLane.getPlayer().Deck.Shuffle();
-        PlayerHand.Instance.Clear();
 
         // Select card
         if (!firstLoad)
         {
             selectCardScreen.GetComponent<SelectCard>().enabled = true;
             yield return new WaitUntil(() => selectCardScreen.GetComponent<SelectCard>().picked());
-            selectCardScreen.GetComponent<SelectCard>().returnCard();
+            var newCard = selectCardScreen.GetComponent<SelectCard>().returnCard();
+
+            playerLane.getPlayer().Deck.AddCards(new List<CardActionData>() {
+                newCard
+            });
         }
 
         //Exit fade
