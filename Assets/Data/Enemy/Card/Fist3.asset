@@ -15,5 +15,6 @@ MonoBehaviour:
   damage: 3
   shield: 0
   condition: 0
-  cardSprite: {fileID: 3211287697712591694, guid: 935ac8f1bc96c493dbb1dd53e530cfa3,
+  playerCardSprite: {fileID: 0}
+  enemyCardSprite: {fileID: 3211287697712591694, guid: 0452fed1eeb194f95befb76dc7acbeb0,
     type: 3}

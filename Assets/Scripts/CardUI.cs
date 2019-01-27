@@ -8,6 +8,8 @@ public class CardUI : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnte
 {
     public CardAction Action { get; set; }
 
+    public bool draggable = false;
+
     private static float scaleMultiplier = 1.5f;
     private float currentScale = 1.0f;
     private Vector3 oldPos;
@@ -23,6 +25,9 @@ public class CardUI : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnte
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (!draggable)
+          return;
+
         oldPos = transform.position;
         oldParent = transform.parent;
         oldChildIndex = transform.GetSiblingIndex();
@@ -31,6 +36,9 @@ public class CardUI : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnte
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!draggable)
+          return;
+
         transform.position = Input.mousePosition;
 
         List<RaycastResult> hits = new List<RaycastResult>();
@@ -46,6 +54,9 @@ public class CardUI : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnte
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!draggable)
+          return;
+
         List<RaycastResult> hits = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventData, hits);
         foreach (RaycastResult i in hits)
@@ -77,12 +88,18 @@ public class CardUI : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnte
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (!draggable)
+          return;
+
         transform.localScale = transform.localScale * scaleMultiplier;
         currentScale *= scaleMultiplier;
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (!draggable)
+          return;
+
         transform.localScale = transform.localScale / currentScale;
         currentScale = 1.0f;
     }
