@@ -91,6 +91,8 @@ public class CharacterLane : MonoBehaviour
             characters.Remove(character);
             Destroy(character.gameObject);
         }
+
+
     }
 
     public void AddCharacter(GameObject character, int index)
@@ -111,4 +113,6 @@ public class CharacterLane : MonoBehaviour
 
         return null;
     }
+
+
 }
