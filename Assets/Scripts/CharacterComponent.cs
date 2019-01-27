@@ -62,9 +62,6 @@ public class CharacterComponent : MonoBehaviour
         {
             Health += Shield;
             Shield = 0;
-
-            if (Health <= 0)
-                Die();
         }
     }
 
@@ -81,11 +78,6 @@ public class CharacterComponent : MonoBehaviour
         if(shield != 0)
             Debug.Log($"{gameObject.name} has received {shield} shields");
         Shield += shield;
-    }
-
-    private void Die()
-    {
-        Destroy(gameObject);
     }
 
     public void AddCondition(HealthCondition condition)

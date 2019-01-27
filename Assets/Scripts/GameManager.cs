@@ -59,6 +59,16 @@ public class GameManager : MonoBehaviour
             endRoundButton.interactable = true;
             IEnumerable<CardAction> enemyCards = enemyLane.GetComponent<CharacterLane>().GetTurnActions();
             GenerateBaseTimeline(enemyCards);
+            if (playerLane.updateGameState())
+            {
+                // Next level
+                ToNextLevel();
+            }
+            if (enemyLane.updateGameState())
+            {
+                // Game over
+                GameOver();
+            }
             playing = true;
         }
     }
@@ -108,5 +118,15 @@ public class GameManager : MonoBehaviour
                enemyLane.ExecuteAction(action.Data);
                break;
         }
+    }
+
+    private void ToNextLevel()
+    {
+
+    }
+
+    private void GameOver()
+    {
+
     }
 }
