@@ -30,11 +30,8 @@ public class GameManager : MonoBehaviour
     {
         LoadLevel();
 
-        for (int i = 0; i < 5; i++)
-        {
-            var playerActions = playerLane.GetTurnActions();
-            ShowPlayerHand(playerActions);
-        }
+        var playerActions = playerLane.GetTurnActions();
+        ShowPlayerHand(playerActions);
 
         var enemyActions = enemyLane.GetTurnActions();
         GenerateEnemyTimeline(enemyActions);
@@ -156,6 +153,14 @@ public class GameManager : MonoBehaviour
 
     private void LoadLevel()
     {
+        PlayerHand.Instance.Clear();
+        playerLane.getPlayer().ResetDeck();
+        for (int i = 0; i < 4; i++)
+        {
+            var playerActions = playerLane.GetTurnActions();
+            ShowPlayerHand(playerActions);
+        }
+
         int index = 0;
         foreach (GameObject i in levels[currentLevel].character) {
             if (!levels[currentLevel].character[index])

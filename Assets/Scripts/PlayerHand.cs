@@ -50,4 +50,12 @@ public class PlayerHand : MonoBehaviour
         card.transform.localScale = new Vector3(cardScale, cardScale, 0);
         return true;
     }
+
+    public void Clear()
+    {
+        foreach (Transform child in transform)
+        {
+            GameObject.Destroy(child.gameObject);
+        }
+    }
 }

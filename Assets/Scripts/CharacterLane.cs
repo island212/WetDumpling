@@ -89,4 +89,17 @@ public class CharacterLane : MonoBehaviour
         var newCharacter = Instantiate(character, spawnPositions[index]);
         characters.Add(newCharacter.GetComponent<CharacterComponent>());
     }
+
+    public CharacterComponent getPlayer()
+    {
+        foreach (CharacterComponent i in characters)
+        {
+            if (i.tag == "Entity")
+            {
+                return i;
+            }
+        }
+
+        return null;
+    }
 }

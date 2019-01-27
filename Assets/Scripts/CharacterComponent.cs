@@ -59,6 +59,11 @@ public class CharacterComponent : MonoBehaviour
         LifeValue.SetShield(Shield);
     }
 
+    public void ResetDeck()
+    {
+        Deck = new Deck(characterData.actions);
+    }
+
     private void Attack(int damage)
     {
         Debug.Log($"{gameObject.name} has received {damage} damage");
