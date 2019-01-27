@@ -2,14 +2,18 @@
 using System.Linq;
 using UnityEngine;
 using Utils;
+using UnityEditor;
 
 public class CharacterLane : MonoBehaviour
 {
     [SerializeField]
     private CharacterComponent[] characters;
+    [SerializeField]
+    private GameObject[] enemies;
 
     private void Awake()
     {
+        enemies = Resources.LoadAll("Assets/Prefabs/Enemies") as GameObject[];
         characters = transform.GetComponentsInChildren<CharacterComponent>();
     }
 
