@@ -101,7 +101,7 @@ public class GameManager : MonoBehaviour
             var nextAction = TimelineHandler.Instance.RemoveTopCard();
             if (nextAction.Action.Source)
             {
-                ExecuteAction(nextAction.Action);
+                yield return ExecuteAction(nextAction.Action);
             }
             else
             {
