@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     private int currentLevel = 0;
     private bool isPlayerGameOver;
     private bool isEnemyGameOver;
-    public float waitTimeBetweenActions = 0.5f;
+    public float waitTimeBetweenActions = 0.0f;
 
     void Start()
     {

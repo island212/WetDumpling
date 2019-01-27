@@ -14,12 +14,16 @@ public class Deck
     public Deck(IEnumerable<CardActionData> cards)
     {
         FullDeck = new List<CardActionData>(cards);
-        this.cards = FullDeck;
+        Shuffle();
     }
 
     public Deck Shuffle()
     {
-        cards = FullDeck;
+        cards = new List<CardActionData>();
+        foreach (CardActionData i in FullDeck)
+        {
+            cards.Add(i);
+        }
         cards.Shuffle();
         return this;
     }
