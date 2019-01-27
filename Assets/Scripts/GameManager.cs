@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < numCard; i++)
         {
             // Do attack things with animation for damage or defence
-            yield return new WaitForSeconds(waitTimeBetweenActions);
+            yield return new WaitForSeconds(waitTimeBetweenActions / 2);
 
             //Check game over state
 
@@ -132,7 +132,7 @@ public class GameManager : MonoBehaviour
         ShowPlayerHand(playerActions);
     }
 
-    private void ExecuteAction(CardAction action)
+    private IEnumerator ExecuteAction(CardAction action)
     {
         var targetData = action.Data.targetData;
         var selfData = action.Data.selfData;
@@ -150,15 +150,19 @@ public class GameManager : MonoBehaviour
                     iTween.MoveTo(action.Source.gameObject.transform.GetChild(0).gameObject,
                       iTween.Hash("position", enemyPos.transform.position,
                                   "easeType", "easeInQuart",
-                                  "time", 0.5f));
+                                  "time", 0.49f));
 
                     iTween.MoveTo(action.Source.gameObject.transform.GetChild(0).gameObject,
                       iTween.Hash("position", initialPos,
-                                  "time", 0.5f,
-                                  "delay", 0.5f));
-                }
+                                  "time", 0.49f,
+                                  "delay", 0.49f));
 
-                enemyLane.ExecuteAction(targetData);
+                    yield return StartCoroutine(ExecuteWithCoroutine(enemyLane, targetData));
+                }
+                else
+                {
+                    enemyLane.ExecuteAction(targetData);
+                }
             }
         }
         else
@@ -175,21 +179,34 @@ public class GameManager : MonoBehaviour
             {
                if (targetData.damage > 0) 
                {
-                  Vector3 initialPos = action.Source.gameObject.transform.GetChild(0).gameObject.transform.position;
-                  iTween.MoveTo(action.Source.gameObject.transform.GetChild(0).gameObject,
-                    iTween.Hash("position", playerPos.transform.position,
-                                "easeType", "easeInQuart",
-                                "time", 0.5f));
+                  if (action.Source != null)
+                  {
+                      Vector3 initialPos = action.Source.gameObject.transform.GetChild(0).gameObject.transform.position;
+                      iTween.MoveTo(action.Source.gameObject.transform.GetChild(0).gameObject,
+                        iTween.Hash("position", playerPos.transform.position,
+                                    "easeType", "easeInQuart",
+                                    "time", 0.5f));
 
-                  iTween.MoveTo(action.Source.gameObject.transform.GetChild(0).gameObject,
-                    iTween.Hash("position", initialPos,
-                                "time", 0.5f,
-                                "delay", 0.5f));
+                      iTween.MoveTo(action.Source.gameObject.transform.GetChild(0).gameObject,
+                        iTween.Hash("position", initialPos,
+                                    "time", 0.5f,
+                                    "delay", 0.5f));
+
+                      yield return StartCoroutine(ExecuteWithCoroutine(playerLane, targetData));
+                  }
                }
-
-               playerLane.ExecuteAction(targetData);
+               else 
+               {
+                  playerLane.ExecuteAction(targetData);
+               }
             }
         }
+    }
+
+    private IEnumerator ExecuteWithCoroutine(CharacterLane lane, CardData data) 
+    {
+        yield return new WaitForSeconds(waitTimeBetweenActions / 2);
+        lane.ExecuteAction(data);
     }
 
     private void ToNextLevel()

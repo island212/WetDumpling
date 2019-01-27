@@ -16,4 +16,4 @@ MonoBehaviour:
   shield: 0
   heal: 0
   condition: 0
-  IsPush: 1
+  push: 1
