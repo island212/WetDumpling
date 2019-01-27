@@ -11,13 +11,17 @@ public class CharacterLane : MonoBehaviour
 
     private void Awake()
     {
-        Transform[] spawns = transform.GetComponentsInChildren<Transform>().Where(r => r.tag == "Enemy").ToArray();
+        var spawns = transform.GetComponentsInChildren<Transform>()
+                              .Where(r => r.CompareTag("Enemy"))
+                              .ToArray();
         if (spawns.Length > 0)
         {
             spawnPositions = new List<Transform>(spawns);
         }
 
-        Transform[] components = transform.GetComponentsInChildren<Transform>().Where(r => r.tag == "Entity").ToArray();
+        var components = transform.GetComponentsInChildren<Transform>()
+                                  .Where(r => r.CompareTag("Entity"))
+                                  .ToArray();
         if (components.Length > 0)
         {
             characters.Add(components[0].GetComponent<CharacterComponent>());
@@ -32,14 +36,18 @@ public class CharacterLane : MonoBehaviour
             bool isPlayer = character.IsPlayer;
             var cards = isPlayer ? GetPlayerCards(character) : GetEnemyCards(character);
 
-            cardActions.AddRange(cards.Select(cardActionData => new CardAction {Data = cardActionData, Source = character}));
+            cardActions.AddRange(cards.Select(cardActionData => new CardAction
+            {
+                Data = cardActionData,
+                Source = character
+            }));
         }
 
         return cardActions.Shuffle();
     }
 
     private static IList<CardActionData> GetPlayerCards(CharacterComponent player) =>
-        player.Deck.GetCards(player.characterData.speed, true);
+        player.Deck.Shuffle().GetCards(player.characterData.speed);
 
     private static IList<CardActionData> GetEnemyCards(CharacterComponent enemy) =>
         enemy.Deck
@@ -56,6 +64,7 @@ public class CharacterLane : MonoBehaviour
             var nextChar = characters[pushIndex];
             characters[pushIndex] = charToPush;
             characters[0] = nextChar;
+            UpdateLaneState();
         }
 
         characters[0].ExecuteAction(data);
@@ -73,7 +82,7 @@ public class CharacterLane : MonoBehaviour
 
         foreach (var character in characters)
         {
-            if (character.IsDead) 
+            if (character.IsDead)
                 charsToRemove.Add(character);
         }
 

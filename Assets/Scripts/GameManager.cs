@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour
         }
 
         int index = 0;
-        foreach (GameObject i in levels[currentLevel].character) {
+        foreach (var i in levels[currentLevel].character) {
             if (!levels[currentLevel].character[index])
             {
                 break;

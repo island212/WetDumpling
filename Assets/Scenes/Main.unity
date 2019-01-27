@@ -775,6 +775,7 @@ MonoBehaviour:
   levels:
   - character:
     - {fileID: 4488394995825040636, guid: 630722e561530458785bc75077bb1524, type: 3}
+    - {fileID: 4488394995825040636, guid: 630722e561530458785bc75077bb1524, type: 3}
   - character:
     - {fileID: 4488394995825040636, guid: 2f38063bc22744f87b006aa0b18fd02c, type: 3}
   - character:
