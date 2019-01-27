@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     public Button endRoundButton;
     public GameObject gameOver;
     public Fade intermission;
+	public GameObject playerPos;
+    public GameObject enemyPos;
     public level[] levels;
 
     private int currentLevel = 0;
@@ -139,15 +141,54 @@ public class GameManager : MonoBehaviour
         {
             if (selfData != null)
                 playerLane.ExecuteAction(selfData);
-            if (targetData != null)
+
+            if (targetData != null) 
+            {
+                if (targetData.damage > 0)
+                {
+                    Vector3 initialPos = action.Source.gameObject.transform.GetChild(0).gameObject.transform.position;
+                    iTween.MoveTo(action.Source.gameObject.transform.GetChild(0).gameObject,
+                      iTween.Hash("position", enemyPos.transform.position,
+                                  "easeType", "easeInQuart",
+                                  "time", 0.5f));
+
+                    iTween.MoveTo(action.Source.gameObject.transform.GetChild(0).gameObject,
+                      iTween.Hash("position", initialPos,
+                                  "time", 0.5f,
+                                  "delay", 0.5f));
+                }
+
                 enemyLane.ExecuteAction(targetData);
+            }
         }
         else
         {
-            if (action.Data.selfData != null)
+
+            if (selfData != null)
+            {
+                // Animations de shield/heal ici.              
+
                 enemyLane.ExecuteAction(selfData);
-            if (targetData != null)
-                playerLane.ExecuteAction(targetData);
+            }
+
+            if (targetData != null) 
+            {
+               if (targetData.damage > 0) 
+               {
+                  Vector3 initialPos = action.Source.gameObject.transform.GetChild(0).gameObject.transform.position;
+                  iTween.MoveTo(action.Source.gameObject.transform.GetChild(0).gameObject,
+                    iTween.Hash("position", playerPos.transform.position,
+                                "easeType", "easeInQuart",
+                                "time", 0.5f));
+
+                  iTween.MoveTo(action.Source.gameObject.transform.GetChild(0).gameObject,
+                    iTween.Hash("position", initialPos,
+                                "time", 0.5f,
+                                "delay", 0.5f));
+               }
+
+               playerLane.ExecuteAction(targetData);
+            }
         }
     }
 
