@@ -65,24 +65,27 @@ public class CharacterLane : MonoBehaviour
     }
 
     // Check for level or game over
-    public bool updateGameState()
+    public bool IsGameOver()
     {
-        for (int i = 0; i < characters.Count; i++)
+        UpdateLaneState();
+        return characters.Count <= 0;
+    }
+
+    void UpdateLaneState()
+    {
+        var charsToRemove = new List<CharacterComponent>();
+        foreach (var character in characters)
         {
-            if (characters[i].Health <= 0)
+            if (character.Health <= 0)
             {
-                CharacterComponent tempChar = characters[i];
-                characters.Remove(tempChar);
-                Destroy(tempChar);
+                charsToRemove.Add(character);
             }
         }
 
-        if (characters.Count <= 0) {
-            return true;
-        }
-        else
+        foreach (var character in charsToRemove)
         {
-            return false;
+            characters.Remove(character);
+            Destroy(character.gameObject);
         }
     }
 
