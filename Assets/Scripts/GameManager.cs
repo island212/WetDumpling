@@ -16,9 +16,12 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        var playerActions = playerLane.GetTurnActions();
-        LogActions(playerActions);
-        ShowPlayerHand(playerActions);
+        for (int i = 0; i < 5; i++)
+        {
+            var playerActions = playerLane.GetTurnActions();
+            LogActions(playerActions);
+            ShowPlayerHand(playerActions);
+        }
 
         var enemyActions = enemyLane.GetTurnActions();
         GenerateBaseTimeline(enemyActions);
@@ -70,6 +73,11 @@ public class GameManager : MonoBehaviour
                 // Game over
                 GameOver();
             }
+
+            var playerActions = playerLane.GetTurnActions();
+            LogActions(playerActions);
+            ShowPlayerHand(playerActions);
+
             playing = true;
         }
     }
@@ -131,11 +139,11 @@ public class GameManager : MonoBehaviour
 
     private void LoadLevel()
     {
-
+        // TODO
     }
 
     private void GameOver()
     {
-
+        // TODO
     }
 }
