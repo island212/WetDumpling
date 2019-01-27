@@ -11,13 +11,17 @@ public class CharacterLane : MonoBehaviour
 
     private void Awake()
     {
-        Transform[] spawns = transform.GetComponentsInChildren<Transform>().Where(r => r.tag == "Enemy").ToArray();
+        var spawns = transform.GetComponentsInChildren<Transform>()
+                              .Where(r => r.CompareTag("Enemy"))
+                              .ToArray();
         if (spawns.Length > 0)
         {
             spawnPositions = new List<Transform>(spawns);
         }
 
-        Transform[] components = transform.GetComponentsInChildren<Transform>().Where(r => r.tag == "Entity").ToArray();
+        var components = transform.GetComponentsInChildren<Transform>()
+                                  .Where(r => r.CompareTag("Entity"))
+                                  .ToArray();
         if (components.Length > 0)
         {
             characters.Add(components[0].GetComponent<CharacterComponent>());
@@ -50,7 +54,7 @@ public class CharacterLane : MonoBehaviour
     {
         int pushIndex = data.push;
 
-        if (pushIndex != 0)
+        if (pushIndex != 0 && characters.Count <= pushIndex)
         {
             var charToPush = characters[0];
             var nextChar = characters[pushIndex];
