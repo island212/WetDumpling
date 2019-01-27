@@ -7,11 +7,21 @@ using UnityEditor;
 public class CharacterLane : MonoBehaviour
 {
     [SerializeField] private List<CharacterComponent> characters = null;
+    public List<Transform> spawnPositions = null;
 
     private void Awake()
     {
-        var components = transform.GetComponentsInChildren<CharacterComponent>();
-        characters.AddRange(components);
+        Transform[] spawns = transform.GetComponentsInChildren<Transform>().Where(r => r.tag == "Enemy").ToArray();
+        if (spawns.Length > 0)
+        {
+            spawnPositions = new List<Transform>(spawns);
+        }
+
+        Transform[] components = transform.GetComponentsInChildren<Transform>().Where(r => r.tag == "Entity").ToArray();
+        if (components.Length > 0)
+        {
+            characters.Add(components[0].GetComponent<CharacterComponent>());
+        }
     }
 
     public IEnumerable<CardAction> GetTurnActions()
@@ -74,10 +84,10 @@ public class CharacterLane : MonoBehaviour
         }
     }
 
-    public void AddCharacter(GameObject character)
+    public void AddCharacter(GameObject character, int index)
     {
         // does not spawn at right position yet
-        var newCharacter = Instantiate(character, transform);
+        var newCharacter = Instantiate(character, spawnPositions[index]);
         characters.Add(newCharacter.GetComponent<CharacterComponent>());
     }
 }
