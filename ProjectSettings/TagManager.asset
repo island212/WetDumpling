@@ -7,6 +7,7 @@ TagManager:
   - TimelinePanel
   - PlayerhandPanel
   - Entity
+  - Enemy
   layers:
   - Default
   - TransparentFX
