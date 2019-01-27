@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class CardUI : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler
+public class CardUI : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IPointerClickHandler
 {
     public CardAction Action { get; set; }
 
     public bool draggable = false;
+    public GameObject selectLink = null;
 
     private static float scaleMultiplier = 1.5f;
     private float currentScale = 1.0f;
@@ -96,5 +97,13 @@ public class CardUI : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnte
 
         transform.localScale = transform.localScale / currentScale;
         currentScale = 1.0f;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (selectLink)
+        {
+            selectLink.GetComponent<SelectCard>().setPicked(gameObject);
+        }
     }
 }

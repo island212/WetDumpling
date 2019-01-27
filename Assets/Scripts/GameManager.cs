@@ -22,16 +22,20 @@ public class GameManager : MonoBehaviour
     public Fade intermission;
     public GameObject playerPos;
     public GameObject enemyPos;
+    public GameObject selectCardScreen;
     public level[] levels;
 
     private int currentLevel = 0;
     private bool isPlayerGameOver;
     private bool isEnemyGameOver;
     public float waitTimeBetweenActions = 0.0f;
+    private bool firstLoad;
 
     void Start()
     {
+        firstLoad = true;
         StartCoroutine(LoadLevel());
+
     }
 
     private static void ShowPlayerHand(IEnumerable<CardAction> cards)
@@ -52,7 +56,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private static GameObject InstantiateCardAction(CardAction card, string tag)
+    public static GameObject InstantiateCardAction(CardAction card, string tag)
     {
         var prefab = Resources.Load<GameObject>($"Prefabs/Cards/{tag}Card");
         var instance = Instantiate(prefab);
@@ -88,7 +92,6 @@ public class GameManager : MonoBehaviour
                 // Next level
                 TimelineHandler.Instance.Clear();
                 ToNextLevel();
-                StartCoroutine(intermission.FadeAnim());
                 break;
             }
 
@@ -235,9 +238,37 @@ public class GameManager : MonoBehaviour
 
     IEnumerator LoadLevel()
     {
+        //Play fade
+        GameObject fadeObj = intermission.FadeFunc();
+        if (!firstLoad)
+        {
+            fadeObj.GetComponent<Animation>().Play("Fade");
+        }
         yield return new WaitForSeconds(0.5f);
         
         playerLane.getPlayer().Deck.Shuffle();
+
+        // Select card
+        if (!firstLoad)
+        {
+            selectCardScreen.GetComponent<SelectCard>().enabled = true;
+            yield return new WaitUntil(() => selectCardScreen.GetComponent<SelectCard>().picked());
+            var newCard = selectCardScreen.GetComponent<SelectCard>().returnCard();
+
+            playerLane.getPlayer().Deck.AddCards(new List<CardActionData>() {
+                newCard
+            });
+        }
+
+        //Exit fade
+        if (!firstLoad)
+        {
+            fadeObj.GetComponent<Animation>().Play("FadeExit");
+        }
+        yield return new WaitForSeconds(0.5f);
+        Destroy(fadeObj);
+
+        playerLane.getPlayer().ResetDeck();
         for (int i = 0; i < 4; i++)
         {
             var playerActions = playerLane.GetTurnActions();
@@ -258,6 +289,8 @@ public class GameManager : MonoBehaviour
         }
 
         SetupNextTurn(false);
+
+        firstLoad = false;
     }
 
     IEnumerator GameOver()
