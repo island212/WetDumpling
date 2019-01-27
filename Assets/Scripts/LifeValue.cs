@@ -30,7 +30,7 @@ public class LifeValue : MonoBehaviour
 
     public void SetShield(int shield) 
     {
-        currentShield += shield;
+        currentShield = shield;
         shieldText.text = currentShield.ToString();
 
         UpdateVisible();

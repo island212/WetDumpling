@@ -25,6 +25,7 @@ public class CharacterComponent : MonoBehaviour
     private void Awake()
     {
         Health = characterData.baseHealth;
+        Shield = characterData.baseShield;
         Deck = new Deck(characterData.actions);
     }
 
@@ -50,6 +51,7 @@ public class CharacterComponent : MonoBehaviour
         }
 
         LifeValue.SetLife(Health);
+        LifeValue.SetShield(Shield);
     }
 
     public void Attack(int damage)
@@ -71,7 +73,7 @@ public class CharacterComponent : MonoBehaviour
     public void Heal(int amount)
     {
         Debug.Log($"{gameObject.name} has healed {amount}");
-        Health += heal;
+        Health += amount;
     }
 
     public void AddShield(int shield)
