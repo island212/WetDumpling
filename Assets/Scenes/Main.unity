@@ -775,6 +775,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerLane: {fileID: 979439158}
   enemyLane: {fileID: 1317269432}
+  endRoundButton: {fileID: 13374054}
   bottomPanel: {fileID: 0}
 --- !u!4 &704832012
 Transform:
@@ -875,7 +876,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardScale: 1.5
-  cardPefab: {fileID: 0}
   maxCards: 6
 --- !u!4 &811244485 stripped
 Transform:
