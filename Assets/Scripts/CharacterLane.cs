@@ -44,6 +44,16 @@ public class CharacterLane : MonoBehaviour
     {
         //TODO check if the action is a push and move the character by the specified amount
 
+        int pushIndex = data.push;
+
+        if (pushIndex != 0)
+        {
+            var charToPush = characters[0];
+            var nextChar = characters[pushIndex];
+            characters[pushIndex] = charToPush;
+            characters[0] = nextChar;
+        }
+
         characters[0].ExecuteAction(data);
     }
 

@@ -17,10 +17,10 @@ MonoBehaviour:
   speed: 1
   baseShield: 0
   actions:
-  - {fileID: 11400000, guid: 168beb01ce2f9fb4daf5b8e7670ab1ce, type: 2}
-  - {fileID: 11400000, guid: a9b3dcd90dbf7164396f7c196fa0e815, type: 2}
-  - {fileID: 11400000, guid: add9f3608a88e9447a0f4f57f4b4d8e5, type: 2}
-  - {fileID: 11400000, guid: c5b148734cfd6474ab01c7c8157ee341, type: 2}
+  - {fileID: 11400000, guid: dcd7be03218238843bd7e053b33898ce, type: 2}
+  - {fileID: 11400000, guid: dcd7be03218238843bd7e053b33898ce, type: 2}
+  - {fileID: 11400000, guid: dcd7be03218238843bd7e053b33898ce, type: 2}
+  - {fileID: 11400000, guid: dcd7be03218238843bd7e053b33898ce, type: 2}
   - {fileID: 11400000, guid: aba4f0bcb451042458c4c3d77ad4cdf8, type: 2}
   - {fileID: 11400000, guid: 168beb01ce2f9fb4daf5b8e7670ab1ce, type: 2}
   - {fileID: 11400000, guid: a9b3dcd90dbf7164396f7c196fa0e815, type: 2}

@@ -9,4 +9,5 @@ public class CardData : ScriptableObject
     public int shield = 0;
     public int heal = 0;
     public HealthCondition condition = HealthCondition.None;
+    public int push = 0;
 }
