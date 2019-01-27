@@ -258,6 +258,7 @@ public class GameManager : MonoBehaviour
             playerLane.getPlayer().Deck.AddCards(new List<CardActionData>() {
                 newCard
             });
+            selectCardScreen.GetComponent<SelectCard>().enabled = false;
         }
 
         //Exit fade
