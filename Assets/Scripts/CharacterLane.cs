@@ -13,7 +13,7 @@ public class CharacterLane : MonoBehaviour
 
     private void Awake()
     {
-        enemies = Resources.LoadAll("Assets/Prefabs/Enemies") as GameObject[];
+        enemies = Resources.LoadAll<GameObject>("Prefabs/Enemies");
         characters = transform.GetComponentsInChildren<CharacterComponent>();
     }
 
