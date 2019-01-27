@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public Fade intermission;
 	public GameObject playerPos;
     public GameObject enemyPos;
+    public GameObject selectCardScreen;
     public level[] levels;
 
     private int currentLevel = 0;
@@ -34,7 +35,7 @@ public class GameManager : MonoBehaviour
     {
         firstLoad = true;
         StartCoroutine(LoadLevel());
-        firstLoad = false;
+
     }
 
     private static void ShowPlayerHand(IEnumerable<CardAction> cards)
@@ -55,7 +56,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private static GameObject InstantiateCardAction(CardAction card, string tag)
+    public static GameObject InstantiateCardAction(CardAction card, string tag)
     {
         var prefab = Resources.Load<GameObject>($"Prefabs/Cards/{tag}Card");
         var instance = Instantiate(prefab);
@@ -224,19 +225,26 @@ public class GameManager : MonoBehaviour
         GameObject fadeObj = intermission.FadeFunc();
         if (!firstLoad)
         {
-            Debug.Log("T");
             fadeObj.GetComponent<Animation>().Play("Fade");
         }
         yield return new WaitForSeconds(0.5f);
         PlayerHand.Instance.Clear();
 
         // Select card
+        if (!firstLoad)
+        {
+            selectCardScreen.GetComponent<SelectCard>().enabled = true;
+            yield return new WaitUntil(() => selectCardScreen.GetComponent<SelectCard>().picked());
+            selectCardScreen.GetComponent<SelectCard>().returnCard();
+        }
 
         //Exit fade
         if (!firstLoad)
         {
             fadeObj.GetComponent<Animation>().Play("FadeExit");
         }
+        yield return new WaitForSeconds(0.5f);
+        Destroy(fadeObj);
 
         playerLane.getPlayer().ResetDeck();
         for (int i = 0; i < 4; i++)
@@ -256,6 +264,8 @@ public class GameManager : MonoBehaviour
         }
 
         SetupNextTurn();
+
+        firstLoad = false;
     }
 
     IEnumerator GameOver()
