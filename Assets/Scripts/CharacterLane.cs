@@ -68,7 +68,7 @@ public class CharacterLane : MonoBehaviour
 
     private void HandlePush(CardData data)
     {
-        if (characters.Count <= 0) 
+        if (characters.Count <= 1) 
             return;
 
         int pushIndex = data.push;
