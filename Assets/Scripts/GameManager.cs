@@ -93,12 +93,14 @@ public class GameManager : MonoBehaviour
     {
         // play animation of attack
         int numCard = TimelineHandler.Instance.GetNumberOfCards();
-        for (int i = 0; i < numCard; i++) {
-            yield return new WaitForSeconds(2);
+        for (int i = 0; i < numCard; i++) 
+        {
+            // Do attack things with animation for damage or defence
+            yield return new WaitForSeconds(1);
             var nextAction = TimelineHandler.Instance.RemoveTopCard();
             
             ExecuteAction(nextAction.Action);
-
+            
             Destroy(nextAction.gameObject);
             TimelineHandler.Instance.updateCanvas();
         }

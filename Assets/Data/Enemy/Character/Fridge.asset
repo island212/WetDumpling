@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Fridge
   m_EditorClassIdentifier: 
   isPlayer: 0
-  maxHealth: 5
+  baseHealth: 3
   speed: 1
+  baseShield: 3
   actions:
   - {fileID: 11400000, guid: 09a70d8abd09143d2b14157b3ba768c2, type: 2}
   - {fileID: 11400000, guid: a7d27459f43951f4780f726a7b7d47d7, type: 2}

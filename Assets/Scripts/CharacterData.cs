@@ -9,6 +9,6 @@ using UnityEngine;
 public class CharacterData : ScriptableObject
 {
     public bool isPlayer;
-    public int maxHealth, speed;
+    public int baseHealth, speed, baseShield;
     public CardData[] actions;
 }
