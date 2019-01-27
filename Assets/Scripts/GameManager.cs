@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
         ShowPlayerHand(playerActions);
 
         var enemyActions = enemyLane.GetTurnActions();
+        GenerateBaseTimeline(enemyActions);
         //LogActions(enemyActions);
     }
 
@@ -31,8 +32,14 @@ public class GameManager : MonoBehaviour
 
     void ShowPlayerHand(IEnumerable<CardAction> cards) {
         foreach (CardAction card in cards) {
-            GameObject instance = Instantiate(card.Data.cardSprite);
+            GameObject instance = Instantiate(card.Data.playerCardSprite);
             PlayerHand.Instance.addCard(instance);
+        }
+    }
+
+    void GenerateBaseTimeline(IEnumerable<CardAction> cards) {
+        foreach (CardAction card in cards) {
+            TimelineHandler.Instance.AddCard(card);
         }
     }
 

@@ -13,7 +13,6 @@ public class TimelineHandler : MonoBehaviour
     public static TimelineHandler Instance { get; private set; }
 
     public float cardScale;
-    public GameObject cardPefab;
 
     [SerializeField]
     private int maxCards;
@@ -50,7 +49,7 @@ public class TimelineHandler : MonoBehaviour
             return false;
         }
 
-        GameObject card = Instantiate(cardPefab, transform);
+        GameObject card = Instantiate(action.Data.enemyCardSprite, transform);
         card.GetComponent<CardUI>().Action = action;
         return true;
     }
