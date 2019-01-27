@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public CharacterLane playerLane;
     public CharacterLane enemyLane;
     public Button endRoundButton;
+    public GameObject gameOver;
 
     public Transform bottomPanel;
     private bool playing;
@@ -16,9 +18,12 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        var playerActions = playerLane.GetTurnActions();
-        LogActions(playerActions);
-        ShowPlayerHand(playerActions);
+        for (int i = 0; i < 5; i++)
+        {
+            var playerActions = playerLane.GetTurnActions();
+            LogActions(playerActions);
+            ShowPlayerHand(playerActions);
+        }
 
         var enemyActions = enemyLane.GetTurnActions();
         GenerateBaseTimeline(enemyActions);
@@ -70,6 +75,11 @@ public class GameManager : MonoBehaviour
                 // Game over
                 GameOver();
             }
+
+            var playerActions = playerLane.GetTurnActions();
+            LogActions(playerActions);
+            ShowPlayerHand(playerActions);
+
             playing = true;
         }
     }
@@ -131,11 +141,14 @@ public class GameManager : MonoBehaviour
 
     private void LoadLevel()
     {
-
+        // TODO
     }
 
-    private void GameOver()
+    IEnumerator GameOver()
     {
-        
+        gameOver.SetActive(true);
+        // spawn game over text
+        yield return new WaitForSeconds(3.0f);
+        SceneManager.LoadScene("Menu");
     }
 }
