@@ -711,6 +711,7 @@ MonoBehaviour:
   playerLane: {fileID: 979439158}
   enemyLane: {fileID: 1317269432}
   endRoundButton: {fileID: 13374054}
+  gameOver: {fileID: 2003363897}
   bottomPanel: {fileID: 0}
 --- !u!4 &704832012
 Transform:
