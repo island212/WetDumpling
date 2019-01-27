@@ -18,4 +18,4 @@ MonoBehaviour:
   baseShield: 0
   actions:
   - {fileID: 11400000, guid: c5b148734cfd6474ab01c7c8157ee341, type: 2}
-  - {fileID: 11400000, guid: b97da6972aeb3bf4e93a2aa773d5861d, type: 2}
+  - {fileID: 11400000, guid: 9cc112692fadf4a1ab21d38de6dd5f44, type: 2}
