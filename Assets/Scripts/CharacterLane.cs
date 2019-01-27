@@ -7,7 +7,7 @@ using UnityEditor;
 public class CharacterLane : MonoBehaviour
 {
     [SerializeField]
-    private List<CharacterComponent> characters;
+    private List<CharacterComponent> characters = null;
 
     private void Awake()
     {

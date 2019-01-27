@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     public Transform bottomPanel;
     private bool playing;
+    private int currentLevel = 0;
 
     void Start()
     {
@@ -123,6 +124,12 @@ public class GameManager : MonoBehaviour
     }
 
     private void ToNextLevel()
+    {
+        currentLevel++;
+        LoadLevel();
+    }
+
+    private void LoadLevel()
     {
 
     }
