@@ -2,15 +2,16 @@
 using System.Linq;
 using UnityEngine;
 using Utils;
+using UnityEditor;
 
 public class CharacterLane : MonoBehaviour
 {
     [SerializeField]
-    private CharacterComponent[] characters;
+    private List<CharacterComponent> characters;
 
     private void Awake()
     {
-        characters = transform.GetComponentsInChildren<CharacterComponent>();
+        characters.AddRange(transform.GetComponentsInChildren<CharacterComponent>());
     }
 
     public IEnumerable<CardAction> GetTurnActions()
@@ -62,5 +63,33 @@ public class CharacterLane : MonoBehaviour
             return;
 
         characters[0].ExecuteAction(data);
+    }
+
+    // Check for level or game over
+    public bool updateGameState()
+    {
+        for (int i = 0; i < characters.Count; i++)
+        {
+            if (characters[i].Health <= 0)
+            {
+                CharacterComponent tempChar = characters[i];
+                characters.Remove(tempChar);
+                Destroy(tempChar);
+            }
+        }
+
+        if (characters.Count <= 0) {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public void addCharacter(GameObject character)
+    {
+        GameObject newCharacter = Instantiate(character, transform);
+        characters.Add(newCharacter.GetComponent<CharacterComponent>());
     }
 }

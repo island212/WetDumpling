@@ -899,7 +899,7 @@ GameObject:
   - component: {fileID: 979439158}
   m_Layer: 0
   m_Name: PlayerLane
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -917,6 +917,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characters: []
+  enemies: []
 --- !u!4 &979439159
 Transform:
   m_ObjectHideFlags: 0
@@ -1102,6 +1103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characters: []
+  enemies: []
 --- !u!4 &1317269433
 Transform:
   m_ObjectHideFlags: 0
@@ -1318,6 +1320,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1858807574}
     m_Modifications:
+    - target: {fileID: 3356254945617435629, guid: 30d277d0ad3c6d243b56e3eb79584b90,
+        type: 3}
+      propertyPath: m_Name
+      value: Life
+      objectReference: {fileID: 0}
     - target: {fileID: 3356254945617435628, guid: 30d277d0ad3c6d243b56e3eb79584b90,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1372,11 +1379,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3356254945617435629, guid: 30d277d0ad3c6d243b56e3eb79584b90,
-        type: 3}
-      propertyPath: m_Name
-      value: Life
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30d277d0ad3c6d243b56e3eb79584b90, type: 3}

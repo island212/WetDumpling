@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
         var enemyActions = enemyLane.GetTurnActions();
         GenerateBaseTimeline(enemyActions);
         //LogActions(enemyActions);
+
+        playing = true;
     }
 
     void LogActions(IEnumerable<CardAction> actions)
@@ -55,6 +57,19 @@ public class GameManager : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             // enable button
             endRoundButton.interactable = true;
+            IEnumerable<CardAction> enemyCards = enemyLane.GetComponent<CharacterLane>().GetTurnActions();
+            GenerateBaseTimeline(enemyCards);
+            if (playerLane.updateGameState())
+            {
+                // Next level
+                ToNextLevel();
+            }
+            if (enemyLane.updateGameState())
+            {
+                // Game over
+                GameOver();
+            }
+            playing = true;
         }
     }
 
@@ -105,5 +120,15 @@ public class GameManager : MonoBehaviour
                enemyLane.ExecuteAction(action.Data);
                break;
         }
+    }
+
+    private void ToNextLevel()
+    {
+
+    }
+
+    private void GameOver()
+    {
+
     }
 }
