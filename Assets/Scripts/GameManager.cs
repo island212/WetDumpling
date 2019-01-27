@@ -28,10 +28,13 @@ public class GameManager : MonoBehaviour
     private bool isPlayerGameOver;
     private bool isEnemyGameOver;
     public float waitTimeBetweenActions = 0.0f;
+    private bool firstLoad;
 
     void Start()
     {
+        firstLoad = true;
         StartCoroutine(LoadLevel());
+        firstLoad = false;
     }
 
     private static void ShowPlayerHand(IEnumerable<CardAction> cards)
@@ -88,7 +91,6 @@ public class GameManager : MonoBehaviour
                 // Next level
                 TimelineHandler.Instance.Clear();
                 ToNextLevel();
-                StartCoroutine(intermission.FadeAnim());
                 break;
             }
 
@@ -218,8 +220,24 @@ public class GameManager : MonoBehaviour
 
     IEnumerator LoadLevel()
     {
+        //Play fade
+        GameObject fadeObj = intermission.FadeFunc();
+        if (!firstLoad)
+        {
+            Debug.Log("T");
+            fadeObj.GetComponent<Animation>().Play("Fade");
+        }
         yield return new WaitForSeconds(0.5f);
         PlayerHand.Instance.Clear();
+
+        // Select card
+
+        //Exit fade
+        if (!firstLoad)
+        {
+            fadeObj.GetComponent<Animation>().Play("FadeExit");
+        }
+
         playerLane.getPlayer().ResetDeck();
         for (int i = 0; i < 4; i++)
         {
