@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public CharacterLane playerLane;
     public CharacterLane enemyLane;
     public Button endRoundButton;
+    public GameObject gameOver;
 
     public Transform bottomPanel;
     private bool playing;
@@ -142,8 +144,11 @@ public class GameManager : MonoBehaviour
         // TODO
     }
 
-    private void GameOver()
+    IEnumerator GameOver()
     {
-        // TODO
+        gameOver.SetActive(true);
+        // spawn game over text
+        yield return new WaitForSeconds(3.0f);
+        SceneManager.LoadScene("Menu");
     }
 }
