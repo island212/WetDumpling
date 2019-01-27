@@ -46,7 +46,7 @@ public class CharacterLane : MonoBehaviour
             }));
         }
 
-        return cardActions.Shuffle();
+        return cardActions;
     }
 
     private static IList<CardActionData> GetPlayerCards(CharacterComponent player) =>

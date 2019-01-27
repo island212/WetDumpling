@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         // disable button
         endRoundButton.interactable = false;
-
+        
         StartCoroutine(PlayTimeline(SetupNextTurn));
     }
 
@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour
         done?.Invoke();
     }
 
-    private void SetupNextTurn()
+    private void SetupNextTurn(bool shouldDraw)
     {
         // unlock player
         Cursor.visible = true;
@@ -127,8 +127,17 @@ public class GameManager : MonoBehaviour
 
         GenerateEnemyTimeline(enemyCards);
 
-        var playerActions = playerLane.GetTurnActions();
-        ShowPlayerHand(playerActions);
+        if (shouldDraw)
+        {
+            var playerActions = playerLane.GetTurnActions();
+        
+            ShowPlayerHand(playerActions);
+        }
+    }
+
+    private void SetupNextTurn()
+    {
+        SetupNextTurn(true);
     }
 
     private IEnumerator ExecuteAction(CardAction action)
@@ -219,6 +228,7 @@ public class GameManager : MonoBehaviour
 
     private void ToNextLevel()
     {
+        PlayerHand.Instance.Clear();
         currentLevel++;
         StartCoroutine(LoadLevel());
     }
@@ -226,12 +236,13 @@ public class GameManager : MonoBehaviour
     IEnumerator LoadLevel()
     {
         yield return new WaitForSeconds(0.5f);
-        PlayerHand.Instance.Clear();
+        
         playerLane.getPlayer().Deck.Shuffle();
         for (int i = 0; i < 4; i++)
         {
             var playerActions = playerLane.GetTurnActions();
             ShowPlayerHand(playerActions);
+            Debug.Log($"{i}: {playerActions.First()}");
         }
 
         int index = 0;
@@ -246,7 +257,7 @@ public class GameManager : MonoBehaviour
             index++;
         }
 
-        SetupNextTurn();
+        SetupNextTurn(false);
     }
 
     IEnumerator GameOver()
