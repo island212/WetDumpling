@@ -26,7 +26,7 @@ public class CharacterLane : MonoBehaviour
                     {
                         Data = card, 
                         Source = character, 
-                        Target = isPlayer ? TargetType.Player : TargetType.Enemy
+                        Target = isPlayer ? TargetType.Enemy : TargetType.Player
                     }
                 )
             );

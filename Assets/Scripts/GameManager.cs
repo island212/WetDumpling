@@ -97,10 +97,10 @@ public class GameManager : MonoBehaviour
         switch (action.Target)
         {
            case TargetType.Player:
-               enemyLane.ExecuteAction(action.Data);
+               playerLane.ExecuteAction(action.Data);
                break;
            case TargetType.Enemy:
-               playerLane.ExecuteAction(action.Data);
+               enemyLane.ExecuteAction(action.Data);
                break;
         }
     }
