@@ -32,7 +32,7 @@ public class TimelineHandler : MonoBehaviour
         }
     }
 
-    public int getNumberOfCards()
+    public int GetNumberOfCards()
     {
         return transform.childCount;
     }
@@ -44,7 +44,7 @@ public class TimelineHandler : MonoBehaviour
 
     public bool AddCard(CardAction action)
     {
-        if (getNumberOfCards() > maxCards)
+        if (GetNumberOfCards() > maxCards)
         {
             return false;
         }
@@ -54,20 +54,19 @@ public class TimelineHandler : MonoBehaviour
         return true;
     }
 
-    public bool addCardFromBoard(GameObject card)
+    public bool AddCardFromBoard(GameObject card)
     {
-        if (getNumberOfCards() > maxCards)
+        if (GetNumberOfCards() > maxCards)
         {
             return false;
         }
 
         Transform closestCard = null;
         float smallestDistance = Mathf.Infinity;
-        float currentDistance;
 
         foreach (Transform i in transform)
         {
-            currentDistance = Mathf.Abs((i.position - card.transform.position).magnitude);
+            float currentDistance = Mathf.Abs((i.position - card.transform.position).magnitude);
             if (i != card.transform && ghostCardHolder != i && currentDistance < smallestDistance)
             {
                 closestCard = i;
@@ -76,9 +75,7 @@ public class TimelineHandler : MonoBehaviour
         }
 
         card.transform.SetParent(transform);
-
         card.transform.SetSiblingIndex(closestCard.transform.GetSiblingIndex());
-
         card.transform.localScale = new Vector3(cardScale * 1.5f, cardScale * 1.5f, 0);
 
         cardCount++;
@@ -88,18 +85,18 @@ public class TimelineHandler : MonoBehaviour
         return true;
     }
 
-    public Transform removeTopCard()
+    public CardUI RemoveTopCard()
     {
-        if (getNumberOfCards() <= 0)
+        if (GetNumberOfCards() <= 0)
         {
             return null;
         }
 
-        Transform[] childrens = GetComponentsInChildren<Transform>();
+        var children = GetComponentsInChildren<CardUI>();
 
         OnCardRemoved?.Invoke();
 
-        return childrens[1];
+        return children[0];
     }
 
     public void updateCanvas()

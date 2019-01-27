@@ -4,11 +4,13 @@ using System.Linq;
 using UnityEngine;
 
 [System.Flags]
-public enum HealthCondition { None = 0, Stun = 1 << 1, Weaken = 1 << 2 }
+public enum HealthCondition { None = 0, Stunned = 1 << 1, Weakened = 1 << 2 }
 
 public class CharacterComponent : MonoBehaviour
 {
     public CharacterData characterData;
+
+    public LifeValue LifeValue;
 
     public int Health { get; private set; }
     public int Shield { get; private set; }
@@ -31,9 +33,30 @@ public class CharacterComponent : MonoBehaviour
         return characterData.actions[Random.Range(0, characterData.actions.Length)];
     }
 
-    public void Damage(int damage)
+    public void ExecuteAction(CardData action)
     {
-        Debug.Log(gameObject.name + " has received " + damage);
+        var condition = action.condition;
+        if (condition != HealthCondition.None)
+        {
+            AddCondition(condition);
+        }
+
+        AddShield(action.shield);
+
+        var damage = action.damage;
+        if (damage > 0)
+        {
+            Attack(damage);
+        }
+
+        LifeValue.SetLife(Health);
+    }
+
+    public void Attack(int damage)
+    {   
+        if(damage != 0)
+            Debug.Log($"{gameObject.name} has received {damage} damage");
+
         Shield -= damage;
         if (Shield < 0)
         {
@@ -45,17 +68,18 @@ public class CharacterComponent : MonoBehaviour
         }
     }
 
-    public void Heal(int heal)
+    public void Heal(int amount)
     {
-        Debug.Log(gameObject.name + " has healed " + heal);
-        Health += heal;
+        Debug.Log($"{gameObject.name} has healed {amount}");
+        Health += amount;
         if (Health > characterData.maxHealth)
             Health = characterData.maxHealth;
     }
 
     public void AddShield(int shield)
     {
-        Debug.Log(gameObject.name + " has received " + shield + " shields");
+        if(shield != 0)
+            Debug.Log($"{gameObject.name} has received {shield} shields");
         Shield += shield;
     }
 

@@ -17,7 +17,7 @@ public class CardUI : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnte
     private int oldChildIndex;
     private bool inserted = false;
 
-    struct movement
+    struct Movement
     {
         Vector3 oldPos;
         Vector3 newPos;
@@ -63,12 +63,12 @@ public class CardUI : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnte
         {
             if (i.gameObject.tag == "TimelinePanel")
             {
-                TimelineHandler.Instance.addCardFromBoard(gameObject);
+                TimelineHandler.Instance.AddCardFromBoard(gameObject);
                 inserted = true;
             }
             else if (i.gameObject.tag == "PlayerhandPanel")
             {
-                PlayerHand.Instance.addCardFromBoard(gameObject);
+                PlayerHand.Instance.AddCardFromBoard(gameObject);
                 inserted = true;
             }
         }

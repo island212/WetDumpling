@@ -13,23 +13,13 @@ public class CharacterLane : MonoBehaviour
         characters = transform.GetComponentsInChildren<CharacterComponent>();
     }
 
-    public void Hit(int damage, HealthCondition condition)
-    {
-        if(damage > 0)
-            characters[0].Damage(damage);
-        if(condition != HealthCondition.None)
-            characters[0].AddCondition(condition);
-    }
-
     public IEnumerable<CardAction> GetTurnActions()
     {
         var cardActions = new List<CardAction>();
         foreach (var character in characters)
         {
             bool isPlayer = character.IsPlayer;
-            //Debug.Log($"{character.Deck.Count()} {character.characterData.speed}");
             var cards = isPlayer ? GetPlayerCards(character): GetEnemyCards(character);
-            //Debug.Log(character.Deck.Count());
             cardActions.AddRange(
                 cards.Select(card => 
                     new CardAction
@@ -53,6 +43,11 @@ public class CharacterLane : MonoBehaviour
             .Shuffle()
             .GetCards(enemy.characterData.speed, false);
 
+    public bool CanTakeActions()
+    {
+        return true;
+    }
+
     public void RemoveAllConditions()
     {
         foreach (var character in characters)
@@ -61,13 +56,11 @@ public class CharacterLane : MonoBehaviour
         }
     }
 
-    public bool CanTakeActions()
+    public void ExecuteAction(CardData data)
     {
-        foreach (var character in characters)
-        {
-            if (!character.Status.HasFlag(HealthCondition.Stun))
-                return false;
-        }
-        return true;
+        if (!CanTakeActions()) 
+            return;
+
+        characters[0].ExecuteAction(data);
     }
 }
