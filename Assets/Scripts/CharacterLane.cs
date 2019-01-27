@@ -76,8 +76,8 @@ public class CharacterLane : MonoBehaviour
         if (pushIndex <= 0) 
             return;
 
-        if (pushIndex > characters.Count)
-            pushIndex = characters.Count;
+        if (pushIndex > characters.Count - 1)
+            pushIndex = characters.Count - 1;
 
         characters.Remove(currentTarget);
         characters.Insert(pushIndex, currentTarget);
