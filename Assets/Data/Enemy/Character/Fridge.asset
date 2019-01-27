@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fridge
   m_EditorClassIdentifier: 
   isPlayer: 0
-  baseHealth: 3
+  baseHealth: 1
   speed: 1
   baseShield: 3
   actions:

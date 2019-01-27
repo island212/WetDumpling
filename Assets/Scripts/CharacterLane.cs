@@ -50,7 +50,7 @@ public class CharacterLane : MonoBehaviour
     }
 
     private static IList<CardActionData> GetPlayerCards(CharacterComponent player) =>
-        player.Deck.Shuffle().GetCards(player.characterData.speed);
+        player.Deck.GetCards(player.characterData.speed);
 
     private static IList<CardActionData> GetEnemyCards(CharacterComponent enemy) =>
         enemy.Deck

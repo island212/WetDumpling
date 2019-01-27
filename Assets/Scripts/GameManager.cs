@@ -220,7 +220,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         PlayerHand.Instance.Clear();
-        playerLane.getPlayer().ResetDeck();
+        playerLane.getPlayer().Deck.Shuffle();
         for (int i = 0; i < 4; i++)
         {
             var playerActions = playerLane.GetTurnActions();
