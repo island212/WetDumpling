@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public CharacterLane playerLane;
     public CharacterLane enemyLane;
+    public Button endRoundButton;
 
     public Transform bottomPanel;
     private bool playing;
@@ -45,27 +47,30 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (playing == false)
+        if (!playing)
         {
             // unlock player
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+            // enable button
+            endRoundButton.interactable = true;
         }
     }
 
-    public void StartRound()
+    public void EndRound()
     {
-        Debug.Log("Round Started");
+        Debug.Log("Round Ended");
         // lock player action (mouse)
         playing = true;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-
+        // disable button
+        endRoundButton.interactable = false;
 
         // Start fight animation
         StartCoroutine(round());
 
-        // start turn todo (draw cards)
+        // start turn todo (draw cards and etc)
     }
 
     IEnumerator round()
